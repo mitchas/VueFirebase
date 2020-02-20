@@ -48,9 +48,9 @@ npm run test
 npm run lint
 ```
 
-## Other Setup
+# Other Setup
 
-### Firebase Setup
+## Firebase Setup
  * Set up new project
  * Switch database to firestore (enable native mode through cloud console if needed)
  * Enable email provider in authentication setttings on Firebase console
@@ -58,50 +58,19 @@ npm run lint
  * Setup firestore rules to match the firestore.rules file here.
 
 
-#### Delete user data on Firebase
+### Delete user data on Firebase
 Add [this extension]() to your firebase console to automatically delete all user data when a user deletes their account.
 
 Configure firestore paths to `users/{UID},profiles/{UID}`
 
-
-#### Firestore Collections
-Here is the data structure for Firestore, and a quick explanation of what eatch is
-
-
-Document/
-├── meta/
-│   ├── usernames
-│         └── {username*}:{user ID*}
-├── users/
-│   ├── {user ID}
-│         └── {User Preferences*}
-├── profiles/
-│   ├── {user ID}
-│         └── {Profile*}
-
- * Usernames hold the username:userId pairs
-	* These are used to check which usernames are taken.
-	* They are **not** deleted when a user deletes account. Usernames can't be reused.
-	* Eventually will be used for profiles. Go to /username, get the matching user ID to lookup user to show for tha tusername.
-
- * Users
-	* Each user has their own document that holds all their **private** preferences and information.
-	* Email address, darkmode pref, etc. Not readable by other users.
- * Profiles
-	* Each user has their own document that holds all their **public** profile information.
-	* Right now it's just username and time created.
-	* Eventually will be stuff for public profiles - picture, bio, whatever.
-	* Readable by everyone, writable only by user/owner.
-
-
-#### Production Public Path
+### Production Public Path
 If the app is going to be deployed in a sub directory (ie website.com/app/), edit the path in vue.config.js.
 
-#### Replace project name
+### Replace project name
 CMD/CTRL+F to find and replace every **ABCDEFG** - which is used as a placeholder for wherever the project name is supposed to be.
 
-#### Terms of Service & Privacy Policy
-Actually read the TOS and Privacy Policy. There's sutff you'll need to replace (like email addresses and URLs), but also make sure it's accuratet for your site. These documents were taken from [Automattic's Legalmattic](https://github.com/Automattic/legalmattic) documents (and modified a bit).
+### Terms of Service & Privacy Policy
+Read the TOS and Privacy Policy. There's sutff you'll need to replace (like email addresses and URLs), but also make sure it's accuratet for your site. These documents were taken from [Automattic's Legalmattic](https://github.com/Automattic/legalmattic) documents (and modified a bit).
 
 ## Other Features
  * Detect soft keyboard to hide bottom elements
