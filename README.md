@@ -14,13 +14,6 @@ This is a template for a Vue-Firebase app. It includes all the basics for a user
     * Re-authenticate for sensitive changes
 
 ## Installation
-### Firebase Connection
-Get your Firebase secrets from the Firebase console and fill them in on `.env` and `.env.production`. The production secrets will be used when building if you want to use a separate database for testing.
-
-**Don't commit your secrets to git!!!**
-
-
-Rename or copy your environment variable files to `.env.local` and `.env.production.local` to prevent that from happening. Git will ignore `.local` files.
 
 ### Packages
 ```bash
@@ -51,11 +44,20 @@ npm run lint
 # Other Setup
 
 ## Firebase Setup
- * Set up new project
+ * Set up new project.
+ * Set connection secrets in .env files
  * Switch database to firestore (enable native mode through cloud console if needed)
- * Enable email provider in authentication setttings on Firebase console
+ * Enable email provider in authentication settings on Firebase console
  * Enable [firestore api](https://console.cloud.google.com/launcher/details/google/firestore.googleapis.com?project=_) in the cloud console if you get errors.
  * Setup firestore rules to match the firestore.rules file here.
+
+### Firebase Connection
+Get your Firebase secrets from the Firebase console and fill them in on `.env` and `.env.production`. The production secrets will be used when building if you want to use a separate database for testing.
+
+**Don't commit your secrets to git!!!**
+
+
+Rename or copy your environment variable files to `.env.local` and `.env.production.local` to prevent that from happening. Git will ignore `.local` files.
 
 
 ### Delete user data on Firebase
