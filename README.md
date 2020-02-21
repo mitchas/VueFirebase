@@ -11,37 +11,14 @@ This is a template for a Vue-Firebase app. It includes all the basics for a user
  * Account Settings page
     * Delete account w/multi-step confirmation
     * Change password
+	* Change email
     * Re-authenticate for sensitive changes
+	* Toggle dark mode, UI Animations
+	* Change profile settings
+	* Enable/disable public profile
+	* Random stats
 
-## Installation
-
-### Packages
-```bash
-npm install
-```
-
-## Usage
-
-#### Serve on [localhost:8080](https://localhost:8080)
-```bash
-npm run serve
-```
-
-#### Build for production
-```bash
-npm run build
-```
-
-#### Run your tests
-```bash
-npm run test
-```
-#### Lints and fixes files
-```bash
-npm run lint
-```
-
-# Other Setup
+# Pre-Installation
 
 ## Firebase Setup
  * Set up new project.
@@ -77,6 +54,36 @@ Rename or copy your environment variable files to `.env.local` and `.env.product
 Make sure your security rules on the firebase console match the rules in the files here. Otherwise you might get permission errors.
 
 
+# Project Installation & Development
+
+### Packages
+```bash
+npm install
+```
+
+## Usage
+
+#### Serve on [localhost:8080](https://localhost:8080)
+```bash
+npm run serve
+```
+
+#### Build for production
+```bash
+npm run build
+```
+
+#### Run your tests
+```bash
+npm run test
+```
+#### Lints and fixes files
+```bash
+npm run lint
+```
+
+# Other things to set up
+
 ### Delete user data on Firebase
 Add [this extension]() to your firebase console to automatically delete all user data when a user deletes their account.
 
@@ -91,7 +98,11 @@ CMD/CTRL+F to find and replace every **ABCDEFG** - which is used as a placeholde
 ### Terms of Service & Privacy Policy
 Read the TOS and Privacy Policy. There's sutff you'll need to replace (like email addresses and URLs), but also make sure it's accuratte for your site. These documents were taken from [Automattic's Legalmattic](https://github.com/Automattic/legalmattic) documents (and modified a bit).
 
-## Third-party library
+
+# Everything else you should know
+
+
+## Third-party libraries
 I tried to use as few as possible. Apart from Vue and Firebase and everything required by those, this project includes:
  * [VueMoment](https://www.npmjs.com/package/vue-moment) (MomentJS) for time formatting
  * [FontAwesome](http://fontawesome.com/) (Pro) for icons. You'll have to switch out icons if you don't have pro.

@@ -86,7 +86,7 @@
 					<label>User Since:</label>
 					<div class="setting-value">
 						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
-						<small>{{ new Date($store.getters.userPreferences.user_created) | moment("from") }}</small>
+						<small>({{ new Date($store.getters.userPreferences.user_created) | moment("from") }})</small>
 					</div>
 				</div>
 				<!-- User Number -->
