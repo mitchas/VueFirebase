@@ -20,9 +20,14 @@
 				<div class="account-nav-dropdown" @click="showAccountPopover = !showAccountPopover" @mouseleave="showAccountPopover = false">
 					<!-- Hover label to show dropdown -->
 					<div class="hover-label">
+						<!-- Username -->
 						<span v-if="$store.getters.isSignedIn">{{ $store.getters.userPreferences.username }}</span>
-						<span v-else>Hey there!</span>
-						<i v-bind:class="{'far fa-chevron-circle-down': !showAccountPopover, 'far fa-chevron-circle-up': showAccountPopover}"></i>
+						<!-- Profile photo - if signed in and has one -->
+						<div class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.isSignedIn && $store.getters.profilePhoto"></div>
+						<!-- Not signed in -->
+						<span v-if="!$store.getters.isSignedIn">Hey there!</span>
+						<!-- Chevron down -->
+						<i v-bind:class="{'far fa-chevron-circle-down': !showAccountPopover, 'far fa-chevron-circle-up': showAccountPopover}" v-if="!$store.getters.isSignedIn || !$store.getters.profilePhoto"></i>
 					</div>
 					<!-- Popup on hover/focus -->
 					<div class="account-nav-popover" v-bind:class="{'visible': showAccountPopover}">
@@ -48,11 +53,17 @@
 							<i v-bind:class="{ 'far fa-lightbulb-slash': !$store.getters.userPreferences.darkMode, 'far fa-lightbulb-on': $store.getters.userPreferences.darkMode }"></i>
 						</label>
 						<input type="checkbox" id="topBarDarkModeToggle" v-model="$store.getters.userPreferences.darkMode" @change="toggleDarkMode()" hidden/>
-						<!-- Toggle Dark Mode -->
+						<!-- Profile -->
+						<!-- Show to signed in users -->
+						<button class="popover-link" @click="navigate('/user/' + $store.getters.userPreferences.username )" v-if="$store.getters.isSignedIn">
+							<span>Profile</span>
+							<i class="far fa-user"></i>
+						</button>
+						<!-- Settings -->
 						<!-- Show to signed in users -->
 						<button class="popover-link" @click="navigate('/settings')" v-if="$store.getters.isSignedIn">
 							<span>Settings</span>
-							<i class="far fa-user-cog"></i>
+							<i class="far fa-cog"></i>
 						</button>
 						<!-- Spacer -->
 						<hr v-if="$store.getters.isSignedIn"/>
@@ -185,6 +196,21 @@ export default {
 					min-width: 160px;
 					justify-content: flex-end;
 
+					// Profile photo
+					.profile-photo{
+						display: block;
+						height: 34px;
+						width: 34px;
+						border-radius: var(--borderRadius);
+						box-shadow: var(--shadow);
+						margin-left: 10px;
+						background-size: cover;
+
+						// Adjust padding on larger screens
+						@media (min-width: @screenMD) {
+						}
+					}
+
 					span,i{
 						display: inline-flex;
 						flex-direction: column;
@@ -227,7 +253,7 @@ export default {
 					display: block;
 					width: 200px;
 					position: absolute;
-					top: 58px;
+					top: 56px;
 					transition: 0.1s ease;
 					right: 0;
 					max-height: 0;

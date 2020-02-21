@@ -6,21 +6,32 @@
 		<!-- Account -->
 		<div class="settings-group">
 			<div class="settings-body">
+
 				<!-- Username -->
+				<!-- I built a component to change usernames, but it's not used. -->
 				<div class="setting-row">
-					<div class="setting-label">Username:</div>
-					<div class="setting-value">{{$store.getters.userPreferences.username}}</div>
+					<label>Username:</label>
+					<div class="setting-value">
+						{{$store.getters.userPreferences.username}}
+					</div>
 				</div>
+
 				<!-- Email Address -->
-				<div class="setting-row">
-					<div class="setting-label">Email Address:</div>
-					<div class="setting-value">{{$store.getters.userPreferences.email}}</div>
-				</div>
+				<ChangeEmail></ChangeEmail>
+
+			</div>
+		</div>
+
+		<!-- Public Profile -->
+		<h1>Profile</h1>
+		<div class="settings-group">
+			<div class="settings-body">
+				<ProfileSettings v-if="$store.getters.userPreferences.firebase_uid"></ProfileSettings>
 			</div>
 		</div>
 
 		<!-- General Preferences -->
-		<h2>Preferences</h2>
+		<h1>Preferences</h1>
 		<div class="settings-group">
 			<div class="settings-body">
 				<!-- Username -->
@@ -45,8 +56,8 @@
 			</div>
 		</div>
 
-		<h2>Change Password</h2>
 		<!-- Change Password -->
+		<h1>Change Password</h1>
 		<div class="settings-group">
 			<div class="settings-body">
 				<!-- Change Password Component -->
@@ -54,12 +65,36 @@
 			</div>
 		</div>
 
-		<h2>Delete Account</h2>
 		<!-- Delete Account -->
+		<h1>Delete Account</h1>
 		<div class="settings-group">
 			<div class="settings-body">
 				<!-- Delete Account Component -->
 				<DeleteAccount></DeleteAccount>
+			</div>
+		</div>
+
+
+
+		<!-- Other Stuff -->
+		<h1>Other Stuff</h1>
+		<div class="settings-group">
+			<div class="settings-body">
+
+				<!-- Date Created -->
+				<div class="setting-row">
+					<label>User Since:</label>
+					<div class="setting-value">
+						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+					</div>
+				</div>
+				<!-- User Number -->
+				<div class="setting-row">
+					<label>User Number:</label>
+					<div class="setting-value">
+						{{ $store.getters.userPreferences.user_number }}
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -70,6 +105,9 @@
 <script>
 	// Components
 	import ChangePassword from "@/components/settings/ChangePassword";
+	import ChangeUsername from "@/components/settings/ChangeUsername";
+	import ChangeEmail from "@/components/settings/ChangeEmail";
+	import ProfileSettings from "@/components/settings/ProfileSettings";
 	import DeleteAccount from "@/components/settings/DeleteAccount";
 	import toastMixin from "@/components/mixins/ui/toastMixin.js";
 	import metaMixin from "@/components/mixins/metaMixin.js";
@@ -84,7 +122,7 @@
 			toastMixin,
 			scrollLockMixin,
 			metaMixin,
-			preferencesMixin
+			preferencesMixin,
 		],
 		data() {
 			return {
@@ -94,8 +132,11 @@
 			};
 		},
 		components: {
+			ChangeEmail,
 			ChangePassword,
-			DeleteAccount
+			ChangeUsername,
+			DeleteAccount,
+			ProfileSettings
 		},
 		mounted() {
 			if(this.$store.getters.userPreferences.username){
@@ -114,95 +155,6 @@
 <style lang="less">
 	@import '~@/styles/variables.less';
 
-	// Page wrapper
-	#settingsPage{
-
-		h2{
-			// background-color: red;
-			// margin-top: 10px;
-			margin: 0;
-			padding: 0;
-		}
-	}
-
-	// Group of settings
-	.settings-group{
-		margin: 10px auto 50px auto;
-
-		// Settings group body
-		.settings-body{
-			box-sizing: border-box;
-			padding: 0 0;
-
-			// Horizontal row layout for settings
-			.setting-row{
-				display: flex;
-				flex-direction: column;
-				justify-content: flex-start;
-				width: 400px;
-				padding: 10px 0;
-				position: relative;
-
-				@media (max-width: @screenMD) {
-					width: 100%;
-				}
-
-				.setting-label{
-					font-weight: 500;
-					font-size: 14px;
-					letter-spacing: 0.3px;
-					display: block;
-					padding: 0 0 6px 0;
-				}
-				.setting-value{
-					display: block;
-					font-weight: 600;
-					font-size: 18px;
-					letter-spacing: 0.4px;
-				}
-			}
-
-			// Horizontal row layout for toggles
-			.setting-toggle{
-				display: flex;
-				flex-direction: row;
-				justify-content: flex-start;
-				width: 400px;
-				padding: 10px 0;
-				position: relative;
-
-				@media (max-width: @screenMD) {
-					width: 100%;
-				}
-
-				.setting-toggle-input{
-					display: block;
-					padding-right: 15px;
-				}
-
-				.setting-toggle-label{
-					font-weight: 500;
-					font-size: 14px;
-					letter-spacing: 0.3px;
-					display: block;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					font-size: 16px;
-					letter-spacing: 0.4px;
-					font-weight: 600;
-
-					small{
-						font-size: 12px;
-						font-weight: 400;
-						line-height: 16px;
-						padding-top: 10px;
-						font-family: var(--systemFont);
-					}
-				}
-				
-			}
-		}
-	}
+	
 
 </style>

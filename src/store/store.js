@@ -14,10 +14,14 @@ export const store = new Vuex.Store({
 		scrollLock: false,
 		isSignedIn: false,
 		loginRedirectURL: "",
-		user: '',
+		user: null,
 		// UI
 		// If soft keyboard visible on mobile
 		softKeyboard: false,
+		// Project stats
+		projectStats: {
+			user_count: null
+		},
 		// UserPreferences
 		// Update 3 places in App.vue
 		// at var defaultPrefs
@@ -26,8 +30,11 @@ export const store = new Vuex.Store({
 			user_created: null,
 			admin_level: 0,
 			darkMode: false,
-			animations: true
+			animations: true,
+			email: null,
+			firebase_uid: null
 		},
+		profilePhoto: "",
 	},
 	mutations: {
 		scrollLock(state, scrollLock) {
@@ -45,8 +52,14 @@ export const store = new Vuex.Store({
 		softKeyboard(state, softKeyboard) {
 			state.softKeyboard = softKeyboard
 		},
+		projectStats(state, projectStats) {
+			state.projectStats = projectStats
+		},
 		userPreferences(state, userPreferences) {
 			state.userPreferences = userPreferences
+		},
+		profilePhoto(state, profilePhoto) {
+			state.profilePhoto = profilePhoto
 		},
 	},
 	getters: {
@@ -55,6 +68,8 @@ export const store = new Vuex.Store({
 		loginRedirectURL: state => state.loginRedirectURL,
 		user: state => state.user,
 		softKeyboard: state => state.softKeyboard,
+		projectStats: state => state.projectStats,
 		userPreferences: state => state.userPreferences,
+		profilePhoto: state => state.profilePhoto,
 	}
 })

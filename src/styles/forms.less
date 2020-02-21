@@ -42,6 +42,18 @@ label{
 	.label-error{
 		color: var(--redTransparent);
 	}
+
+	&.label-large{
+		font-size: 15px;
+		font-weight: 600;
+		padding: 4px 0 4px 0;
+		letter-spacing: 0.5px;
+
+		// Increase size on mobile
+		@media (max-width: @screenMD) {
+			font-size: 17px;
+		}
+	}
 }
 
 
@@ -110,7 +122,7 @@ input[type='url']{
 }
 textarea{
     line-height: 20px;
-    padding-top: 8px;
+	padding-top: 8px;
     padding-bottom: 8px;
 }
 
@@ -147,7 +159,7 @@ button{
 		cursor: pointer;
 		text-decoration: underline;
 		transition: var(--transitionFast);
-		background-color: var(--blueHover);
+		background-color: var(--primaryHover);
 	}
 
 	i{
@@ -212,7 +224,6 @@ button{
 
 
 
-
 /////////////////////////
 //     Checkboxes     //
 ///////////////////////
@@ -273,7 +284,7 @@ input[type="checkbox"]:focus {
 		font-weight: 900;
 		transition: var(--bezierTransition);
 		transform: scale(0.75);
-		color: var(--primary);
+		color: var(--text);
 		opacity: 0.3;
 		font-size: 16px;
 		left: 5px;

@@ -27,7 +27,7 @@
 			<button class="button auth-button" type="submit" :disabled="email.length < 5 || !password.length || accountLoading" aria-label="Sign In">
 				<span v-if="accountLoading">Loading</span>
 				<span v-else>Sign In</span>
-				<i v-bind:class="{ 'fad fa-chevron-circle-right': !accountLoading, 'far fa-snowflake fa-spin': accountLoading }"></i>
+				<i v-bind:class="{ 'fad fa-chevron-circle-right': !accountLoading, 'far fa-spinner-third fa-spin': accountLoading }"></i>
 			</button>
 
 			<!-- Create account -->
@@ -97,7 +97,7 @@ export default {
 				},
 				function(err) {
 					_this.accountLoading = false;
-					_this.toast("Ope", "That email and password combination didn't work.", "red", "far fa-exclamation-circle");
+					_this.toast("Oops", "That email and password combination didn't work.", "red", "far fa-exclamation-circle");
 				}	
 			);
 		},

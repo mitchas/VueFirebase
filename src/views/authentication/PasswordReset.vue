@@ -22,7 +22,7 @@
 			<button class="button auth-button" type="submit" :disabled="email.length < 5 || accountLoading" aria-label="Reset Password">
 				<span v-if="accountLoading">Loading</span>
 				<span v-else>Reset Password</span>
-				<i v-bind:class="{ 'fad fa-chevron-circle-right': !accountLoading, 'far fa-snowflake fa-spin': accountLoading }"></i>
+				<i v-bind:class="{ 'fad fa-chevron-circle-right': !accountLoading, 'far fa-spinner-third fa-spin': accountLoading }"></i>
 			</button>
 
 			<!-- Forgot Password -->

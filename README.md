@@ -60,6 +60,10 @@ Get your Firebase secrets from the Firebase console and fill them in on `.env` a
 Rename or copy your environment variable files to `.env.local` and `.env.production.local` to prevent that from happening. Git will ignore `.local` files.
 
 
+### Firestore and storage rules
+Make sure your security rules on the firebase console match the rules in the files here. Otherwise you might get permission errors. 
+
+
 ### Delete user data on Firebase
 Add [this extension]() to your firebase console to automatically delete all user data when a user deletes their account.
 
@@ -72,7 +76,13 @@ If the app is going to be deployed in a sub directory (ie website.com/app/), edi
 CMD/CTRL+F to find and replace every **ABCDEFG** - which is used as a placeholder for wherever the project name is supposed to be.
 
 ### Terms of Service & Privacy Policy
-Read the TOS and Privacy Policy. There's sutff you'll need to replace (like email addresses and URLs), but also make sure it's accuratet for your site. These documents were taken from [Automattic's Legalmattic](https://github.com/Automattic/legalmattic) documents (and modified a bit).
+Read the TOS and Privacy Policy. There's sutff you'll need to replace (like email addresses and URLs), but also make sure it's accuratte for your site. These documents were taken from [Automattic's Legalmattic](https://github.com/Automattic/legalmattic) documents (and modified a bit).
+
+## Third-party library
+I tried to use as few as possible. Apart from Vue and Firebase and everything required by those, this project includes:
+ * [VueMoment](https://www.npmjs.com/package/vue-moment) (MomentJS) for time formatting
+ * [FontAwesome](http://fontawesome.com/) (Pro) for icons. You'll have to switch out icons if you don't have pro.
+
 
 ## Other Features
  * Detect soft keyboard to hide bottom elements
@@ -81,3 +91,5 @@ Read the TOS and Privacy Policy. There's sutff you'll need to replace (like emai
  * Page transitions
  * Uses system fonts (for paragraphs, not headers/display text) to feel more native
  * Users can toggle UI animations in their preferences.
+ * Public profiles based on username, editable in settings.
+ * Public profile photos.

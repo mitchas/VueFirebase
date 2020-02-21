@@ -54,6 +54,10 @@ export default {
 								});
 							}
 
+							// Commit merged prefs to store
+							_this.$store.commit('userPreferences', merged)
+
+
 							// If dark mode is true, set data-theme attribute,
 							// Which will override their device settings
 							// (Saved darkMode pref will always override device setting)
@@ -68,8 +72,17 @@ export default {
 								document.getElementsByTagName("body")[0].classList.add("no-animations");
 							}
 
-							// Commit merged prefs to store
-							_this.$store.commit('userPreferences', merged)
+							// Get profile photo
+							// Save to store
+							var storageRef = firebase.storage().ref();
+							storageRef.child("avi/" + user.uid + ".jpg").getDownloadURL().then(function(url) {
+								// Commit profilePhoto to store
+								_this.$store.commit("profilePhoto", url)
+							}).catch(function(error) {
+								console.log("Error getting profile photo url")
+								console.log(error)
+							});
+
 
 						} else {console.log("No user data found!");}
 					}).catch(function(error) {console.log("Error getting document:", error);});
@@ -80,6 +93,8 @@ export default {
 				}else{
 					_this.$store.commit('isSignedIn', false)
 					_this.$store.commit('user', '')
+					_this.$store.commit("profilePhoto", null)
+
 
 					// This will check for device dark mode and toggle it
 					// Detect dark mode - if dark, enable dark

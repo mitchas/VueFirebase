@@ -5,10 +5,16 @@
 		<transition name="modal">
 			<div id="sidebarBody" class="visible-mobile" v-if="(isMobile && showMobileNav) || (!isMobile)">
 				<span @click="closeMobileNav()">
-					<!-- Places -->
+					<!-- Home -->
 					<button class="icon-link" @click="navigate('/')" aria-label="Home" v-bind:class="{'is-active': $route.path == '/'}">
 						<i class="far fa-home"></i>
 						<span>Home</span>
+					</button>
+					<!-- Profile -->
+					<!-- Only shown if signed in -->
+					<button class="icon-link" v-if="$store.getters.isSignedIn" @click="navigate('/user/' + $store.getters.userPreferences.username )" aria-label="Profile" v-bind:class="{'is-active': $route.path == '/user/' + $store.getters.userPreferences.username }">
+						<i class="far fa-user"></i>
+						<span>Profile</span>
 					</button>
 					<!-- Privacy Policy -->
 					<button class="icon-link" @click="navigate('/privacy')" aria-label="Privacy Policy" v-bind:class="{'is-active': $route.path == '/privacy'}">

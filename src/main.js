@@ -9,6 +9,7 @@ import './styles/base.less'
 
 Vue.config.productionTip = false
 Vue.use(VueFirestore);
+Vue.use(require('vue-moment'));
 
 let app = '';
 

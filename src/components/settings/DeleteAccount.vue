@@ -65,7 +65,7 @@
 							<button class="button red" type="submit" :disabled="textConfirmation.toLowerCase() != 'goodbye'" aria-label="Continue">
 								<span v-if="processing">Loading</span>
 								<span v-else>Delete My Account</span>
-								<i v-bind:class="{ 'fas fa-skull-crossbones': !processing, 'far fa-snowflake fa-spin': processing }"></i>
+								<i v-bind:class="{ 'fas fa-skull-crossbones': !processing, 'far fa-spinner-third fa-spin': processing }"></i>
 							</button>
 						</div>
 

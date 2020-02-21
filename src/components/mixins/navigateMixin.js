@@ -6,12 +6,16 @@ export default {
 		//    Navigation    //
 		/////////////////////
 
-		// Function to programatically naviate with navigate("/route")
-		// This lets you use custom elements that are accessible/focusable
+		// Function to navigate with -> navigate("/route")
+		// This lets you use custom elements that are accessible/focusable, rather than router-link
 		// then use @click to navigate()
 		navigate: function(route) {
-			this.$router.push(route);
-			document.documentElement.scrollTop = 0;
+			if(route == this.$route.path){
+				return;
+			}else{
+				this.$router.push(route);
+				document.documentElement.scrollTop = 0;
+			}
 		}
 	}
 };

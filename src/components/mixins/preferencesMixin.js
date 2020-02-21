@@ -41,7 +41,9 @@ export default {
 				}
 			}
 			// Save dark mode pref to Firebase
-			this.savePrefs();
+			if(this.$store.getters.isSignedIn){
+				this.savePrefs();
+			}
 
 		},
 		////////////////////////
@@ -60,7 +62,9 @@ export default {
 			}
 
 			// Save animations pref to Firebase
-			this.savePrefs();
+			if(this.$store.getters.isSignedIn){
+				this.savePrefs();
+			}
 		}
 	}
 };

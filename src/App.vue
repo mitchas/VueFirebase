@@ -40,6 +40,7 @@
 // Script
 <script>
 import firebase from "firebase";
+import { db } from "@/store/firebase";
 // Components
 import Toast from "@/components/ui/Toast";
 import TopBar from "@/components/ui/TopBar";
@@ -48,7 +49,6 @@ import Sidebar from "@/components/ui/Sidebar";
 import navigateMixin from "@/components/mixins/navigateMixin.js";
 import userStateMixin from "@/components/mixins/auth/userStateMixin.js";
 
-import { db } from "@/store/firebase";
 
 
 export default {
@@ -77,6 +77,7 @@ export default {
 	},
 	mounted() {
 		this.pageMounted = true;
+		this.getProjectStats();
 	},
 	beforeDestroy() { 
 	},
@@ -89,6 +90,29 @@ export default {
 		relayToast: function(title, body, color, icon) {
 			this.$refs.toastComponent.showToast(title, body, color, icon);
 		},
+
+		////////////////////
+		// Project Stats //
+		//////////////////
+		getProjectStats: function(){
+			let _this = this;
+			console.log("Getting project stats")
+
+			// Get project stats from firestore, save to vue store
+			var statRef = db.collection("site").doc('stats');
+			statRef.get().then(function(doc) {
+				if (doc.exists) {
+					// User exists
+					_this.$store.commit('projectStats', doc.data());
+				} else {
+					console.log("Can't get project stats")
+				}
+			}).catch(function(error) {console.log("Error getting project stats:", error);});
+
+
+
+		}
+
 
 
 	}

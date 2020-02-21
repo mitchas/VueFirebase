@@ -37,7 +37,7 @@
 							<button class="button" type="submit" :disabled="!password.length" aria-label="Continue">
 								<span v-if="reAuthLoading">Loading</span>
 								<span v-else>Continue</span>
-								<i v-bind:class="{ 'far fa-long-arrow-right': !reAuthLoading, 'far fa-snowflake fa-spin': reAuthLoading }"></i>
+								<i v-bind:class="{ 'far fa-long-arrow-right': !reAuthLoading, 'far fa-spinner-third fa-spin': reAuthLoading }"></i>
 							</button>
 						</div>
 
@@ -79,7 +79,7 @@ export default {
 			// Hide Modal
 			_this.showModal = false;
 			// Unlock Scroll
-			this.scrollLock(false)
+			_this.scrollLock(false)
 
 			// Emit to hide component after 0.3s to account for transition
 			setTimeout(function(){

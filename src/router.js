@@ -12,6 +12,9 @@ import Error404 from './views/other/error404.vue';
 import TermsOfService from './views/other/docs/TermsOfService.vue';
 import PrivacyPolicy from './views/other/docs/PrivacyPolicy.vue';
 
+// Profile
+import Profile from './views/profile/Profile.vue';
+
 import { store } from '@/store/store'
 
 
@@ -70,6 +73,14 @@ const router = new Router({
 			meta: {
 				requiresAuth: true
 			}
+		},
+		//////////////////////////////
+		// Public profiles
+		//////////////////////////////
+		{
+			path: '/user/:username/',
+			name: 'profile',
+			component: Profile,
 		},
 
 		//////////////////////////////
