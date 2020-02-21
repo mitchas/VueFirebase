@@ -1,5 +1,7 @@
 # Vue Firebase Template
 
+### Demo this template at [mitchs.co/vuefirebase](https://mitchs.co/vuefirebase)
+
 This is a template for a Vue-Firebase app. It includes all the basics for a user-authenticated site.
  * Login/Signup with email
     * Forgot and Reset password.
