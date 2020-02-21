@@ -86,10 +86,11 @@
 					<label>User Since:</label>
 					<div class="setting-value">
 						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+						<small>{{ new Date($store.getters.userPreferences.user_created) | moment("from") }}</small>
 					</div>
 				</div>
 				<!-- User Number -->
-				<div class="setting-row">
+				<div class="setting-row" if="$store.getters.userPreferences.user_number">
 					<label>User Number:</label>
 					<div class="setting-value">
 						{{ $store.getters.userPreferences.user_number }}
@@ -155,6 +156,5 @@
 <style lang="less">
 	@import '~@/styles/variables.less';
 
-	
 
 </style>

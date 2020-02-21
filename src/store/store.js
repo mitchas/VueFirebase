@@ -29,10 +29,11 @@ export const store = new Vuex.Store({
 			username: "",
 			user_created: null,
 			admin_level: 0,
+			user_number: null,
 			darkMode: false,
-			animations: true,
 			email: null,
-			firebase_uid: null
+			firebase_uid: null,
+			animations: true,
 		},
 		profilePhoto: "",
 	},

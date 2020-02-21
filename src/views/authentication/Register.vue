@@ -174,6 +174,7 @@ export default {
 			var profileData = {
 				username: this.username,
 				user_created: new Date().toString(),
+				profile_enabled: true
 			}
 			var profileRef = db.collection("profiles").doc(uid);
 			batch.set(profileRef, profileData);

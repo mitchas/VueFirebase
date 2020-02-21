@@ -4,7 +4,7 @@
 		<!-- No user found -->
 		<transition name="page">
 			<div class="no-profile" v-if="userLoaded && userNotFound">
-				<h1>No user found for @{{profileUsername}}</h1>
+				<h1>No profile found for @{{profileUsername}}</h1>
 			</div>
 		</transition>
 
@@ -105,8 +105,21 @@ export default {
 					_this.userNotFound = false;
 					// Save UID
 					_this.profileData = doc.data();
-					// Get profile photo
-					_this.getProfilePhoto();
+
+					console.log("DOC DATA")
+					console.log()
+
+					// If user profile is disabled, make it look same as not found
+					if(!doc.data().profile_enabled){
+						// Data not found
+						_this.userNotFound = true;
+						// User loaded, show page
+						_this.userLoaded = true;
+					}else{
+						// Get profile photo
+						_this.getProfilePhoto();
+					}
+
 				} else {
 					// Data not found
 					_this.userNotFound = true;

@@ -51,6 +51,19 @@ npm run lint
  * Enable [firestore api](https://console.cloud.google.com/launcher/details/google/firestore.googleapis.com?project=_) in the cloud console if you get errors.
  * Setup firestore rules to match the firestore.rules file here.
 
+### Firebase CLI
+Install the firebase cli, and run `firebase init` in the root directory of this project.
+ * Select whichever options you need - Firestore and Storage are needed, hosting if you are hosting it on Firebase. Functions if you want to add your own.
+ * Select which firebase project you want associated with this project.
+ * Do not overwrite firestore.rules or any existing files. The existing files include the rules you'll need.
+ * Do not overwrite firestore.indexes.json
+ * Set the public directory to dist
+ * YES configure as single page app
+ * Do not overwrite index.html
+ * Do not overwrite storage.rules
+ 
+Deploy with `firebase deploy`
+
 ### Firebase Connection
 Get your Firebase secrets from the Firebase console and fill them in on `.env` and `.env.production`. The production secrets will be used when building if you want to use a separate database for testing.
 
@@ -61,7 +74,7 @@ Rename or copy your environment variable files to `.env.local` and `.env.product
 
 
 ### Firestore and storage rules
-Make sure your security rules on the firebase console match the rules in the files here. Otherwise you might get permission errors. 
+Make sure your security rules on the firebase console match the rules in the files here. Otherwise you might get permission errors.
 
 
 ### Delete user data on Firebase

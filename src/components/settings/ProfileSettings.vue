@@ -1,9 +1,11 @@
 <template>
 	<form class="profile-settings" @submit.prevent="saveProfile()">
-		<p>
-			This information, if provided, is available on <router-link v-bind:to="'/user/' + $store.getters.userPreferences.username">your profile</router-link> for anyone to see.
-		</p>
-		<!-- Photo -->
+		
+		<!-- 
+			Photo 
+			Photo 
+			Photo 
+		-->
 		<div class="setting-row">
 			<!-- Display profile photo -->
 			<div class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.profilePhoto"></div>
@@ -20,19 +22,54 @@
 				<input type="file" id="uploadProfilePhoto" @change="uploadPhoto" hidden/>
 			</div>
 		</div>
-		<!-- Bio -->
-		<div class="setting-row mtop-xs">
-			<label>About you:</label>
-			<div class="setting-value">
-				<textarea v-model="userProfile.bio" @keydown="profileChanges = true"></textarea>
+
+		<!-- Enable Profile -->
+		<div class="setting-toggle mtop-xs">
+			<div class="setting-toggle-input">
+				<input id="enableProfileToggle" type="checkbox" class="toggle" v-model="userProfile.profile_enabled" @change="toggleProfile()"/>
 			</div>
+			<label class="setting-toggle-label" for="animationToggle">
+				Enable Public Profile
+				<small>Toggle whether people can access your public profile.</small>
+			</label>
 		</div>
 
-		<!-- Save changes -->
-		<button type="submit" class="button mtop-xs" :disabled="!profileChanges">
-			<span>Save Changes</span>
-			<i class="far fa-user-check"></i>
-		</button>
+		<!-- Profile fields -->
+		<!-- Only visible if public profile is enabled -->
+		<transition name="basic">
+			<div v-if="userProfile.profile_enabled">
+
+				<!-- Privacy Warrning -->
+				<p>
+					This information, if provided, is available on <router-link v-bind:to="'/user/' + $store.getters.userPreferences.username">your profile</router-link> for anyone to see.
+				</p>
+
+
+				<!-- 
+					Bio 
+					Bio 
+					Bio 
+				-->
+				<div class="setting-row mtop-xs" v-if="userProfile.profile_enabled">
+					<label>About you:</label>
+					<div class="setting-value">
+						<textarea v-model="userProfile.bio" @keydown="profileChanges = true"></textarea>
+					</div>
+				</div>
+
+				<!-- 
+					Save changes 
+					Save changes 
+					Save changes 
+				-->
+				<button type="submit" class="button mtop-xs" :disabled="!profileChanges">
+					<span>Save Changes</span>
+					<i class="far fa-user-check"></i>
+				</button>
+
+			</div>
+		</transition>
+		
 	</form>
 
 	
@@ -88,6 +125,30 @@ export default {
 				_this.toast("Error", error.message, "", "far fa-user-times");
 			})
 		},
+		// Toggle enable/disable profile
+		toggleProfile: function(){
+			let _this = this;
+
+			var toggleState = "enabled"
+			// Default to true
+			var profileState = {profile_enabled: true}
+			// If profile not enabled, or if field doesn't exist
+			if(!_this.userProfile.profile_enabled){
+				toggleState = "disabled"
+				profileState = {profile_enabled: false}
+			}
+
+			console.log("your profile has been  " + toggleState)
+
+			db.collection("profiles").doc(_this.$store.getters.userPreferences.firebase_uid).set(profileState, { merge: true }).then(() => {
+				console.log('Successfully toggled profile to ' + toggleState)
+				_this.toast("Profile " + toggleState, "Your public profile has been " + toggleState, "", "far fa-user");
+				// Reset disabled button
+			}).catch(error => {
+				_this.toast("Error", error.message, "", "far fa-user-times");
+			})
+
+		},
 
 		// ///////////////
 		// Photo
@@ -103,23 +164,34 @@ export default {
 			var profilePhotoRef = storageRef.child("avi/" + _this.$store.getters.userPreferences.firebase_uid + ".jpg");
 
 			var file = event.target.files[0];
-			profilePhotoRef.put(file).then(function(snapshot) {
-				// Success toast
-				_this.toast("Photo updated", "Your profile photo has been changed. ", "", "far fa-camera-alt");
+			// Get file size (bytes / 1024 = kb / 1024 = mb)
+			var fileSize = (file.size/1024)/1024
+			console.log(parseFloat(fileSize))
+			// Restrict file size to 3mb
+			if(parseFloat(fileSize) > 2.0){
+				_this.toast("File too large", "Your image must be smaller than 2mb in size", "red", "far fa-file-times");
+				_this.photoUploading = false;
+			}else{
+				profilePhotoRef.put(file).then(function(snapshot) {
+					// Success toast
+					_this.toast("Photo updated", "Your profile photo has been changed. ", "", "far fa-camera-alt");
 
-				// Save to store
-				snapshot.ref.getDownloadURL().then(function(downloadURL) {
-					_this.$store.commit("profilePhoto", downloadURL + "?=" + Math.random().toString(36).substring(7))
-				});
-				// Done uploading
-				_this.photoUploading = false;
-			}).catch((error) => {
-				console.log("Error uploading photo")
-				console.log(error)
-				_this.toast("Error", error.message, "", "far fa-user-times");
-				// Done uploading
-				_this.photoUploading = false;
-			})
+					// Save to store
+					snapshot.ref.getDownloadURL().then(function(downloadURL) {
+						_this.$store.commit("profilePhoto", downloadURL + "?=" + Math.random().toString(36).substring(7))
+					});
+					// Done uploading
+					_this.photoUploading = false;
+				}).catch((error) => {
+					console.log("Error uploading photo")
+					console.log(error)
+					_this.toast("Error", error.message, "red", "far fa-user-times");
+					// Done uploading
+					_this.photoUploading = false;
+				})
+			}
+
+			
 
 		},
 	}
@@ -133,6 +205,11 @@ export default {
 		height: 120px;
 	}
 
+	// If public profile is disabled, profile fields can be disabled
+	.profile-disabled{
+		opacity: 0.2;
+	}
+
 	// Profile photo
 	.profile-photo{
 		display: block;
@@ -140,7 +217,7 @@ export default {
 		height: 122px;
 		border-radius: 50%;
 		background-size: cover;
-		margin: 8px 0;
+		margin: 0 0 8px 0;
 		box-sizing: border-box;
 
 		// No profile photo

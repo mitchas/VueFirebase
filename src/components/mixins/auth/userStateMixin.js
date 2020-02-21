@@ -38,6 +38,7 @@ export default {
 								username: "",
 								user_created: null,
 								admin_level: 0,
+								user_number: null,
 								darkMode: false,
 								email: _this.$store.getters.user.email,
 								firebase_uid: _this.$store.getters.user.uid,
