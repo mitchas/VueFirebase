@@ -3,13 +3,50 @@
 //////////////////////
 // These are wrappers for input/label combos. 
 
-// Basic
-// Lets you put labels AFTER inputs but still be on op
-.field{
+// Horizontal row layout for settings
+.field-row{
 	display: flex;
-	flex-direction: column-reverse;
-}
+	flex-direction: column;
+	justify-content: flex-start;
+	max-width: 320px;
+	padding: 0 0 0 0;
+	position: relative;
 
+	@media (max-width: @screenMD) {
+		width: 100%;
+		max-width: none;
+	}
+
+	// Left/right label/val group
+	.field-label{
+		font-weight: 500;
+		font-size: 14px;
+		letter-spacing: 0.3px;
+		display: block;
+		padding: 0 0 6px 0;
+	}
+	.field-body{
+		font-weight: 600;
+		font-size: 18px;
+		letter-spacing: 0.4px;
+		padding: 2px 0;
+
+		small{
+			display: block;
+			font-size: 12px;
+			font-weight: 500;
+			padding-top: 3px;
+			letter-spacing: 0.3px;
+			color: var(--textLight);
+			text-transform: capitalize;
+		}
+
+		// input
+		input{
+			width: 100%;
+		}
+	}
+}
 
 
 ////////////////////////
@@ -32,6 +69,7 @@ label{
 	letter-spacing: 0.3px;
 	display: block;
 	color: var(--textLight);
+	font-weight: 500;
 
 	// Increase size on mobile
 	@media (max-width: @screenMD) {
@@ -81,7 +119,8 @@ textarea{
     padding-left: 8px;
     padding-right: 8px;
 	color: var(--text);
-    max-width: 100%;
+	max-width: 100%;
+	font-family: var(--sans);
 	font-weight: 500;
 	letter-spacing: 0.55px;
 	border-radius: var(--borderRadiusSmall);

@@ -1,10 +1,10 @@
 <template>
 
-	<div class="setting-row">
+	<div class="field-row">
 		<!-- Label -->
 		<label>Email Address:</label>
 		<!-- Value -->
-		<div class="setting-value">
+		<div class="field-body">
 			{{$store.getters.userPreferences.email}}
 
 			<!-- Edit email button -->
@@ -18,10 +18,13 @@
 				<form @submit.prevent="changeEmailAddress();" v-if="showEmailEditor" class="edit-setting-form">
 
 					<!-- New email input -->
-					<div class="field mbottom-xs">
-						<input type="email" v-model="newEmailAddress" id="newEmailAddress" required>
-						<label for="newEmailAddress">New Email Address</label>
+					<div class="field-row">
+						<label for="newEmailAddress">New email address</label>
+						<div class="field-body">
+							<input type="email" v-model="newEmailAddress" id="newEmailAddress" required>
+						</div>
 					</div>
+
 
 					<!-- Cancel and save buttons -->
 					<div class="account-field-buttons">

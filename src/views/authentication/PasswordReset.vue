@@ -13,9 +13,11 @@
 		</div>
 		<form class="auth-form-body" @submit.prevent="resetPassword(); accountLoading = true">
 			<!-- Email -->
-			<div class="field">
-				<input type="email" v-model="email" id="passwordResetEmail" placeholder=" " required>
-				<label for="passwordResetEmail">Email Address</label>
+			<div class="field-row">
+				<label for="passwordResetEmail">Email address</label>
+				<div class="field-body">
+					<input type="email" v-model="email" id="passwordResetEmail" placeholder=" " required>
+				</div>
 			</div>
 
 			<!-- Send password reset email -->

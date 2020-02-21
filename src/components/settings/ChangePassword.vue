@@ -2,17 +2,21 @@
 	<div>
 		<form id="passwordChange" @submit.prevent="changePassword()">
 			<!-- New Password -->
-			<div class="field">
-				<input type="password" v-model="newPassword" id="newPassword" placeholder=" " required>
+			<div class="field-row">
 				<label for="newPassword">New password</label>
+				<div class="field-body">
+					<input type="password" v-model="newPassword" id="newPassword" placeholder=" " required>
+				</div>
 			</div>
 			<!-- Verify Password -->
-			<div class="field">
-				<input type="password" v-model="verifyNewPassword" id="verifyNewPassword" placeholder=" " required>
+			<div class="field-row">
 				<label for="verifyNewPassword">Retype new password</label>
+				<div class="field-body">
+					<input type="password" v-model="verifyNewPassword" id="" placeholder=" " required>
+				</div>
 			</div>
 			<!-- Save New Password -->
-			<button type="submit" class="button" :disabled="newPassword.length < 6 || newPassword != verifyNewPassword">
+			<button type="submit" class="button save-setting-button" :disabled="newPassword.length < 6 || newPassword != verifyNewPassword">
 				<span>Save Password</span>
 				<i class="far fa-lock-alt"></i>
 			</button>
@@ -100,10 +104,6 @@ export default {
 		@media (max-width: @screenSM) {
 			width: 100%;
 			max-width: none;
-		}
-
-		.field{
-			margin-top: 10px;
 		}
 
 		// Submit button

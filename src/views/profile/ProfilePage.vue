@@ -17,15 +17,25 @@
 				<!-- No photo -->
 				<div class="profile-photo empty" v-if="!profilePhotoURL"></div>
 
-				<!-- Username header -->
-				<h1 class="mbottom-sm">
+				<!-- Name -->
+				<h1 v-if="profileData.display_name">
+					{{ profileData.display_name }}
+				</h1>
+				<!-- Username -->
+				<h1 class="mbottom-sm" v-if="!profileData.display_name">
 					@{{ profileUsername }}
 				</h1>
+				<h2 class="mbottom-sm" v-if="profileData.display_name">
+					@{{ profileUsername }}
+				</h2>
 
 				<!-- User since -->
 				<div class="user-created">
 					<label>User since:</label>
-					<span>{{ new Date(profileData.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</span>
+					<span>
+						{{ new Date(profileData.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+						<small>({{ new Date(profileData.user_created) | moment("from") }})</small>
+					</span>
 				</div>
 				
 				<!-- Bio -->
@@ -190,6 +200,14 @@ export default {
 
 		h1{
 			font-weight: 900;
+		}
+
+		.user-created small{
+			display: block;
+			font-size: 12px;
+			font-weight: 500;
+			padding-top: 5px;
+			letter-spacing: 0.4px;
 		}
 
 		// User created date

@@ -13,7 +13,7 @@ import TermsOfService from './views/other/docs/TermsOfService.vue';
 import PrivacyPolicy from './views/other/docs/PrivacyPolicy.vue';
 
 // Profile
-import Profile from './views/profile/Profile.vue';
+import ProfilePage from './views/profile/ProfilePage.vue';
 
 import { store } from '@/store/store'
 
@@ -80,7 +80,7 @@ const router = new Router({
 		{
 			path: '/user/:username/',
 			name: 'profile',
-			component: Profile,
+			component: ProfilePage,
 		},
 
 		//////////////////////////////
@@ -98,16 +98,6 @@ const router = new Router({
 			name: 'PrivacyPolicy',
 			component: PrivacyPolicy
 		},
-		// {
-		// 	path: '/event/:eventId/',
-		// 	name: 'singleEvent',
-		// 	component: () => import( './views/events/Single.vue')
-		// },
-		// {
-		// 	path: '/event/:eventId/:eventSlug',
-		// 	name: 'singleEvent',
-		// 	component: () => import( './views/events/Single.vue')
-		// },
 
 		// 404
 		// 404

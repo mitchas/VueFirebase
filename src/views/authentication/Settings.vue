@@ -1,7 +1,7 @@
 <template>
 
 	<div id="settingsPage" class="page">
-		<h1>Settings</h1>
+		<h1>Account Settings</h1>
 
 		<!-- Account -->
 		<div class="settings-group">
@@ -9,9 +9,9 @@
 
 				<!-- Username -->
 				<!-- I built a component to change usernames, but it's not used. -->
-				<div class="setting-row">
+				<div class="field-row">
 					<label>Username:</label>
-					<div class="setting-value">
+					<div class="field-body">
 						{{$store.getters.userPreferences.username}}
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 		</div>
 
 		<!-- Public Profile -->
-		<h1>Profile</h1>
+		<h1>Public Profile</h1>
 		<div class="settings-group">
 			<div class="settings-body">
 				<ProfileSettings v-if="$store.getters.userPreferences.firebase_uid"></ProfileSettings>
@@ -31,7 +31,7 @@
 		</div>
 
 		<!-- General Preferences -->
-		<h1>Preferences</h1>
+		<h1>General Preferences</h1>
 		<div class="settings-group">
 			<div class="settings-body">
 				<!-- Username -->
@@ -65,6 +65,29 @@
 			</div>
 		</div>
 
+		<!-- Other Stuff -->
+		<h1>Other Stuff</h1>
+		<div class="settings-group">
+			<div class="settings-body">
+
+				<!-- Date Created -->
+				<div class="field-row">
+					<label>User Since:</label>
+					<div class="field-body">
+						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+						<small>({{ new Date($store.getters.userPreferences.user_created) | moment("from") }})</small>
+					</div>
+				</div>
+				<!-- User Number -->
+				<div class="field-row" if="$store.getters.userPreferences.user_number">
+					<label>User Number:</label>
+					<div class="field-body">
+						{{ $store.getters.userPreferences.user_number }}
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- Delete Account -->
 		<h1>Delete Account</h1>
 		<div class="settings-group">
@@ -73,32 +96,6 @@
 				<DeleteAccount></DeleteAccount>
 			</div>
 		</div>
-
-
-
-		<!-- Other Stuff -->
-		<h1>Other Stuff</h1>
-		<div class="settings-group">
-			<div class="settings-body">
-
-				<!-- Date Created -->
-				<div class="setting-row">
-					<label>User Since:</label>
-					<div class="setting-value">
-						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
-						<small>({{ new Date($store.getters.userPreferences.user_created) | moment("from") }})</small>
-					</div>
-				</div>
-				<!-- User Number -->
-				<div class="setting-row" if="$store.getters.userPreferences.user_number">
-					<label>User Number:</label>
-					<div class="setting-value">
-						{{ $store.getters.userPreferences.user_number }}
-					</div>
-				</div>
-			</div>
-		</div>
-
 
 	</div>
 </template>

@@ -9,6 +9,11 @@
 		margin: 0;
 		padding: 0;
 	}
+
+	// Add padding around field setting rows
+	.field-row{
+		padding: 10px 0;
+	}
 }
 
 // Individual groups of settings
@@ -25,45 +30,6 @@
 	.settings-body{
 		box-sizing: border-box;
 		padding: 0 0;
-
-		// Horizontal row layout for settings
-		.setting-row{
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-start;
-			width: 400px;
-			padding: 10px 0;
-			position: relative;
-
-			@media (max-width: @screenMD) {
-				width: 100%;
-			}
-
-			// Left/right label/val group
-			.setting-label{
-				font-weight: 500;
-				font-size: 14px;
-				letter-spacing: 0.3px;
-				display: block;
-				padding: 0 0 6px 0;
-			}
-			.setting-value{
-				font-weight: 600;
-				font-size: 18px;
-				letter-spacing: 0.4px;
-				padding: 2px 0;
-
-				small{
-					display: block;
-					font-size: 12px;
-					font-weight: 500;
-					padding-top: 3px;
-					letter-spacing: 0.3px;
-					color: var(--textLight);
-					text-transform: capitalize;
-				}
-			}
-		}
 	}
 }
 
@@ -102,6 +68,7 @@
 	width: 100%;
 	margin-top: 12px;
 
+	// Full width on mobile
 	@media (max-width: @screenSM) {
 		max-width: none;
 	}
@@ -157,9 +124,6 @@
 }
 
 
-
-
-
 // Username validator
 .username-check{
 	display: block;
@@ -208,5 +172,16 @@
 		+ label .username-check{
 			display: none;
 		}
+	}
+}
+
+// Save/submit button on various forms 
+.save-setting-button{
+	margin-top: 12px;
+	@media (max-width: @screenSM) {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		
 	}
 }

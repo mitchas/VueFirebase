@@ -6,12 +6,12 @@
 			Photo 
 			Photo 
 		-->
-		<div class="setting-row">
+		<div class="field-row">
 			<!-- Display profile photo -->
 			<div class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.profilePhoto"></div>
 			<div class="profile-photo empty" v-if="!$store.getters.profilePhoto"></div>
 			<!-- Upload new file -->
-			<div class="setting-value">
+			<div class="field-body mtop-xs">
 				<label for="uploadProfilePhoto" id="uploadProfilePhotoButton" class="button" tabindex="1" aria-label="Upload new profile photo">
 					<div>
 						<span v-if="!photoUploading">Select photo</span>
@@ -41,18 +41,29 @@
 
 				<!-- Privacy Warrning -->
 				<p>
-					This information, if provided, is available on <router-link v-bind:to="'/user/' + $store.getters.userPreferences.username">your profile</router-link> for anyone to see.
+					This information - all completely optional - is available on <router-link v-bind:to="'/user/' + $store.getters.userPreferences.username">your profile</router-link> for anyone to see.
 				</p>
 
 
+				<!-- 
+					Name 
+					Name 
+					Name 
+				-->
+				<div class="field-row">
+					<label>Name:</label>
+					<div class="field-body">
+						<input type="text" v-model="userProfile.display_name" @keydown="profileChanges = true"/>
+					</div>
+				</div>
 				<!-- 
 					Bio 
 					Bio 
 					Bio 
 				-->
-				<div class="setting-row mtop-xs" v-if="userProfile.profile_enabled">
+				<div class="field-row">
 					<label>About you:</label>
-					<div class="setting-value">
+					<div class="field-body">
 						<textarea v-model="userProfile.bio" @keydown="profileChanges = true"></textarea>
 					</div>
 				</div>
@@ -62,7 +73,7 @@
 					Save changes 
 					Save changes 
 				-->
-				<button type="submit" class="button mtop-xs" :disabled="!profileChanges">
+				<button type="submit" class="button save-setting-button" :disabled="!profileChanges">
 					<span>Save Changes</span>
 					<i class="far fa-user-check"></i>
 				</button>
@@ -199,6 +210,7 @@ export default {
 </script>
 
 <style lang="less">
+	@import '~@/styles/variables.less';
 
 	textarea{
 		width: 100%;
@@ -208,6 +220,13 @@ export default {
 	// If public profile is disabled, profile fields can be disabled
 	.profile-disabled{
 		opacity: 0.2;
+	}
+
+	// Full width inputs on mobile
+	.field-row input{
+		@media (max-width: @screenSM) {
+			width: 100%;
+		}
 	}
 
 	// Profile photo

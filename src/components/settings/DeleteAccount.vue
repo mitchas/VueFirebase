@@ -54,8 +54,10 @@
 								Type <b>Goodbye</b> in the box below, then click the button to delete your account forever.
 							</p>
 
-							<div class="field mtop-sm">
-								<input type="text" v-model="textConfirmation" id="goodbye" placeholder=" " required aria-label="Type the word GOODBYE to continue" />
+							<div class="field-row">
+								<div class="field-body">
+									<input type="text" v-model="textConfirmation" id="goodbye" placeholder=" " required aria-label="Type the word GOODBYE to continue" />
+								</div>
 							</div>
 
 						</div>

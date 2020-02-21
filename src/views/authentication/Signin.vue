@@ -9,18 +9,23 @@
 			<h1>Welcome back</h1>
 		</div>
 		<form class="auth-form-body" @submit.prevent="signinUser(); accountLoading = true">
-			<!-- Email -->
-			<div class="field">
-				<input type="email" v-model="email" id="signinEmail" placeholder=" " required>
-				<label for="signinEmail">Email Address</label>
+			<!-- Email Address -->
+			<div class="field-row">
+				<label for="signinEmail">Email address</label>
+				<div class="field-body">
+					<input type="email" v-model="email" id="signinEmail" placeholder=" " required>
+				</div>
 			</div>
+
 			<!-- Password -->
-			<div class="field">
-				<input type="password" v-model="password" id="signinPassword" required>
+			<div class="field-row">
 				<label for="signinPassword">
 					Password
-					<router-link id="forgotPassword" to="/passwordreset">Forgot it?</router-link>
+					<router-link id="forgotPassword" to="/passwordreset" tabindex="-1">Forgot it?</router-link>
 				</label>
+				<div class="field-body">
+					<input type="password" v-model="password" id="signinPassword" required>
+				</div>
 			</div>
 
 			<!-- Sign in button -->

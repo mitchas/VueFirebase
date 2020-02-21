@@ -9,11 +9,11 @@
 
 
 <template>
-	<div class="setting-row">
+	<div class="field-row">
 		<!-- Label -->
-		<div class="setting-label">Username:</div>
+		<div class="field-label">Username:</div>
 		<!-- Value -->
-		<div class="setting-value">
+		<div class="field-body">
 			{{$store.getters.userPreferences.username}}
 
 			<!-- Edit username button -->
@@ -27,9 +27,11 @@
 				<form @submit.prevent="validateUsername();" v-if="showUsernameEditor" class="edit-setting-form">
 
 					<!-- New email input -->
-					<div class="field mbottom-xs">
-						<input type="text" v-model="newUsername" id="newUsername" required>
-						<label for="newUsername">New Username</label>
+					<div class="field-row">
+						<label>New username</label>
+						<div class="field-body">
+							<input type="text" v-model="newUsername" id="newUsername" required>
+						</div>
 					</div>
 
 					<!-- Cancel & Save button -->

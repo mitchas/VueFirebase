@@ -17,28 +17,32 @@
 		<form class="auth-form-body" @submit.prevent="registerUser(); accountLoading = true">
 
 			<!-- Email Address -->
-			<div class="field">
-				<input type="email" id="registerEmail" v-model="email" placeholder="" required/>
-				<label for="registerEmail">
-					Email Address
-				</label>
+			<div class="field-row">
+				<label for="registerEmail">Email address</label>
+				<div class="field-body">
+					<input type="email" id="registerEmail" v-model="email" placeholder="" required/>
+				</div>
 			</div>
+
 			<!-- Username -->
-			<div class="field">
+			<div class="username-row">
 				<input type="text" id="registerUsername" v-model="username" placeholder="" v-on:blur="checkUsername()" required autocapitalize="off"/>
 				<label for="registerUsername">
 					Username <small>- You can't change this later</small>
 					<transition name="basic">
-						<div class="username-check" v-if="username.length > 2 && usernameValid != null && usernameTaken != null">
+						<div class="username-check" v-if="username.length > 2">
 							<i class="far" v-bind:class="{ 'fa-times-circle': !usernameValid && username.length > 2 || usernameTaken, 'fa-check-circle': usernameValid && !usernameTaken}"></i>
 						</div>
 					</transition>
 				</label>
 			</div>
+			
 			<!-- Password -->
-			<div class="field">
-				<input type="password" id="registerPassword" v-model="password" placeholder="" v-on:blur="validateForm()" required/>
+			<div class="field-row">
 				<label for="registerPassword">Password</label>
+				<div class="field-body">
+					<input type="password" id="registerPassword" v-model="password" placeholder="" v-on:blur="validateForm()" required/>
+				</div>
 			</div>
 
 			<!-- Terms of Service -->
@@ -103,6 +107,7 @@ export default {
 			// Form validations
 			tos: false,
 			usernameValid: null,
+			usernameLengthValid: null,
 			usernameTaken: null,
 			passwordValid: false,
 			formErrors: []
@@ -220,6 +225,7 @@ export default {
 
 			// If username exists and is at least 3 chars
 			if(_this.username.length && _this.username.length >= 3 && _this.username.length <= 20){
+				_this.usernameLengthValid = true;
 
 				// Only numbers, letters, hyphen allowed
 				if(/^[aA-zZ0-9-]+$/g.test(_this.username)){
@@ -247,7 +253,7 @@ export default {
 				}
 			}else{
 				// Else it's too short
-				_this.usernameValid = false;
+				_this.usernameLengthValid = false;
 			}
 
 			// Validate form
@@ -267,11 +273,11 @@ export default {
 			}
 
 			// If username is too short 
-			if(this.username && this.username.length < 3 || this.username.length > 20){
+			if(this.usernameLengthValid != null && !this.usernameLengthValid){
 				newErrors.push({message: "Your username must be at least 3 characters, max 20."})
 			}
 			// If username is invalid 
-			if(this.username.length > 2 && !this.usernameValid){
+			if(this.usernameValid != null && !this.usernameValid){
 				newErrors.push({message: "Usernames can only be letters, numbers, and hyphens."})
 			}
 			// If username is taken 
@@ -297,6 +303,12 @@ export default {
 	label small{
 		font-size: 11.5px;
 		opacity: 0.5;
+	}
+
+	// Username row has special class to display column reverse to allow focus + styles
+	.username-row{
+		display: flex;
+		flex-direction: column-reverse;
 	}
 
 	// Username validator
