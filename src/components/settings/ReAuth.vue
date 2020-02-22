@@ -25,7 +25,7 @@
 								You'll need to re-enter your password to do that.
 							</p>
 
-							<div class="field-row mtop-sm">
+							<div class="basic-field mtop-sm">
 								<label for="reAuthPassword">Password</label>
 								<div class="field-body">
 									<input type="password" v-model="password" id="reAuthPassword" placeholder=" " required>

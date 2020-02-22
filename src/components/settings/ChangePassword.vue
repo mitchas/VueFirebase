@@ -2,14 +2,14 @@
 	<div>
 		<form id="passwordChange" @submit.prevent="changePassword()">
 			<!-- New Password -->
-			<div class="field-row">
+			<div class="basic-field">
 				<label for="newPassword">New password</label>
 				<div class="field-body">
 					<input type="password" v-model="newPassword" id="newPassword" placeholder=" " required>
 				</div>
 			</div>
 			<!-- Verify Password -->
-			<div class="field-row">
+			<div class="basic-field">
 				<label for="verifyNewPassword">Retype new password</label>
 				<div class="field-body">
 					<input type="password" v-model="verifyNewPassword" id="" placeholder=" " required>

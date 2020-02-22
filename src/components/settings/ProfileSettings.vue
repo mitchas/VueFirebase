@@ -6,7 +6,7 @@
 			Photo 
 			Photo 
 		-->
-		<div class="field-row">
+		<div class="basic-field">
 			<!-- Display profile photo -->
 			<!-- Label elements so you can click them and trigger file upload window -->
 			<label for="uploadProfilePhoto" class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.profilePhoto"></label>
@@ -32,7 +32,7 @@
 			<div class="setting-toggle-input">
 				<input id="enableProfileToggle" type="checkbox" class="toggle" v-model="userProfile.profile_enabled" @change="toggleProfile()"/>
 			</div>
-			<label class="setting-toggle-label" for="animationToggle">
+			<label class="setting-label-large" for="animationToggle">
 				Enable Public Profile
 				<small>Toggle whether people can access your public profile.</small>
 			</label>
@@ -49,34 +49,22 @@
 				</p>
 
 
-				<!-- 
-					Name 
-					Name 
-					Name 
-				-->
-				<div class="field-row">
+				<!-- Name -->
+				<div class="basic-field">
 					<label>Name:</label>
 					<div class="field-body">
 						<input type="text" v-model="userProfile.display_name" @keydown="profileChanges = true"/>
 					</div>
 				</div>
-				<!-- 
-					Bio 
-					Bio 
-					Bio 
-				-->
-				<div class="field-row">
+				<!-- Bio -->
+				<div class="basic-field">
 					<label>About you:</label>
 					<div class="field-body">
 						<textarea v-model="userProfile.bio" @keydown="profileChanges = true"></textarea>
 					</div>
 				</div>
 
-				<!-- 
-					Save changes 
-					Save changes 
-					Save changes 
-				-->
+				<!-- Save changes -->
 				<button type="submit" class="button save-setting-button" :disabled="!profileChanges">
 					<span>Save Changes</span>
 					<i class="far fa-user-check"></i>
@@ -227,7 +215,7 @@ export default {
 	}
 
 	// Full width inputs on mobile
-	.field-row input{
+	.basic-field input{
 		@media (max-width: @screenSM) {
 			width: 100%;
 		}

@@ -10,7 +10,7 @@
 		</div>
 		<form class="auth-form-body" @submit.prevent="signinUser(); accountLoading = true">
 			<!-- Email Address -->
-			<div class="field-row">
+			<div class="basic-field">
 				<label for="signinEmail">Email address</label>
 				<div class="field-body">
 					<input type="email" v-model="email" id="signinEmail" placeholder=" " required>
@@ -18,7 +18,7 @@
 			</div>
 
 			<!-- Password -->
-			<div class="field-row">
+			<div class="basic-field">
 				<label for="signinPassword">
 					Password
 					<router-link id="forgotPassword" to="/passwordreset" tabindex="-1">Forgot it?</router-link>

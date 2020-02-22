@@ -9,9 +9,9 @@
 
 
 <template>
-	<div class="field-row">
+	<div class="basic-field">
 		<!-- Label -->
-		<div class="field-label">Username:</div>
+		<div>Username:</div>
 		<!-- Value -->
 		<div class="field-body">
 			{{$store.getters.userPreferences.username}}
@@ -26,8 +26,8 @@
 
 				<form @submit.prevent="validateUsername();" v-if="showUsernameEditor" class="edit-setting-form">
 
-					<!-- New email input -->
-					<div class="field-row">
+					<!-- New username input -->
+					<div class="basic-field">
 						<label>New username</label>
 						<div class="field-body">
 							<input type="text" v-model="newUsername" id="newUsername" required>

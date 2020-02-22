@@ -3,7 +3,7 @@
 import firebase from "firebase";
 import { db } from "@/store/firebase";
 
-import preferencesMixin from "@/components/mixins/ui/preferencesMixin.js";
+import preferencesMixin from "@/components/mixins/preferencesMixin.js";
 
 
 export default {

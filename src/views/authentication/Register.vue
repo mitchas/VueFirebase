@@ -17,7 +17,7 @@
 		<form class="auth-form-body" @submit.prevent="registerUser(); accountLoading = true">
 
 			<!-- Email Address -->
-			<div class="field-row">
+			<div class="basic-field">
 				<label for="registerEmail">Email address</label>
 				<div class="field-body">
 					<input type="email" id="registerEmail" v-model="email" placeholder="" required/>
@@ -38,7 +38,7 @@
 			</div>
 			
 			<!-- Password -->
-			<div class="field-row">
+			<div class="basic-field">
 				<label for="registerPassword">Password</label>
 				<div class="field-body">
 					<input type="password" id="registerPassword" v-model="password" placeholder="" v-on:blur="validateForm()" required/>

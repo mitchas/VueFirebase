@@ -174,3 +174,48 @@
 
 
 }
+
+
+// Agreement div 
+// Checkbox with longer label on side
+.agreement{
+	display: flex;
+	box-sizing: border-box;
+	// padding: 10px 0 10px 0;
+	margin: 8px 0;
+	height: 28px;
+
+	// Increase size on small screens
+	@media (max-width: @screenMD) {
+		height: 34px;
+	}
+
+	.check{
+	}
+
+	label{
+		flex-grow: 3;
+		box-sizing: border-box;
+		line-height: 14px;
+		font-size: 12px;
+		padding-left: 10px;
+		vertical-align: middle;
+		letter-spacing: 0.3px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-top: 7px;
+
+		// Fix padding on mobile
+		@media (max-width: @screenMD) {
+			font-size: 14px;
+		}
+
+		a{
+			font-weight: 600;
+			&:focus{
+				text-decoration-style: dashed;
+			}
+		}
+	}
+}

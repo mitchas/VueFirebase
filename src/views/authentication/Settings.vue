@@ -5,35 +5,33 @@
 
 		<!-- Account -->
 		<div class="settings-group">
-			<div class="settings-body">
 
-				<!-- Username -->
-				<!-- I built a component to change usernames, but it's not used. -->
-				<div class="field-row">
-					<label>Username:</label>
-					<div class="field-body">
-						{{$store.getters.userPreferences.username}}
-					</div>
+			<!-- Username -->
+			<!-- I built a component to change usernames, but it's not used. -->
+			<div class="basic-field">
+				<label>Username:</label>
+				<div class="field-body">
+					{{$store.getters.userPreferences.username}}
 				</div>
+			</div>
 
-				<!-- Email Address -->
-				<ChangeEmail></ChangeEmail>
+			<!-- Email Address -->
+			<ChangeEmail></ChangeEmail>
 
-				<!-- Date Created -->
-				<div class="field-row">
-					<label>User Since:</label>
-					<div class="field-body">
-						<!-- Date created -->
-						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
-						<!-- Time since (ex "2 days ago") -->
-						<small>
-							{{ new Date($store.getters.userPreferences.user_created) | moment("from") }}
-						</small>
-						<!-- User number -->
-						<small if="$store.getters.userPreferences.user_number">
-							You were user #{{ $store.getters.userPreferences.user_number }} 
-						</small>
-					</div>
+			<!-- Date Created -->
+			<div class="basic-field">
+				<label>User Since:</label>
+				<div class="field-body">
+					<!-- Date created -->
+					{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+					<!-- Time since (ex "2 days ago") -->
+					<small>
+						{{ new Date($store.getters.userPreferences.user_created) | moment("from") }}
+					</small>
+					<!-- User number -->
+					<small if="$store.getters.userPreferences.user_number">
+						You were user #{{ $store.getters.userPreferences.user_number }} 
+					</small>
 				</div>
 			</div>
 		</div>
@@ -41,75 +39,65 @@
 		<!-- Public Profile -->
 		<h1>Public Profile</h1>
 		<div class="settings-group">
-			<div class="settings-body">
-				<ProfileSettings v-if="$store.getters.userPreferences.firebase_uid"></ProfileSettings>
-			</div>
+			<ProfileSettings v-if="$store.getters.userPreferences.firebase_uid"></ProfileSettings>
 		</div>
 
 		<!-- General Preferences -->
 		<h1>General Preferences</h1>
 		<div class="settings-group">
-			<div class="settings-body">
-				<!-- UI Animations -->
-				<div class="setting-toggle">
-					<div class="setting-toggle-input">
-						<input id="animationToggle" type="checkbox" class="toggle" v-model="$store.getters.userPreferences.animations" @change="toggleAnimations()"/>
-					</div>
-					<label class="setting-toggle-label" for="animationToggle">
-						UI Animations
-						<small>You can turn off the UI animations like the ones that transition between pages.</small>
-					</label>
+			<!-- UI Animations -->
+			<div class="setting-toggle">
+				<div class="setting-toggle-input">
+					<input id="animationToggle" type="checkbox" class="toggle" v-model="$store.getters.userPreferences.animations" @change="toggleAnimations()"/>
 				</div>
-				<!-- Email Address -->
-				<div class="setting-toggle">
-					<div class="setting-toggle-input">
-						<input id="darkmodeToggle" type="checkbox" class="toggle" v-model="$store.getters.userPreferences.darkMode" @change="toggleDarkMode()"/>
-					</div>
-					<label class="setting-toggle-label" for="darkmodeToggle">
-						Dark Mode
-					</label>
+				<label class="setting-label-large" for="animationToggle">
+					UI Animations
+					<small>You can turn off the UI animations like the ones that transition between pages.</small>
+				</label>
+			</div>
+			<!-- Dark Mode -->
+			<div class="setting-toggle">
+				<div class="setting-toggle-input">
+					<input id="darkmodeToggle" type="checkbox" class="toggle" v-model="$store.getters.userPreferences.darkMode" @change="toggleDarkMode()"/>
 				</div>
+				<label class="setting-label-large" for="darkmodeToggle">
+					Dark Mode
+				</label>
 			</div>
 		</div>
 
 		<!-- Change Password -->
 		<h1>Change Password</h1>
 		<div class="settings-group">
-			<div class="settings-body">
-				<!-- Change Password Component -->
-				<ChangePassword></ChangePassword>
-			</div>
+			<!-- Change Password Component -->
+			<ChangePassword></ChangePassword>
 		</div>
 
 		<!-- Delete Account -->
 		<h1>Delete Account</h1>
 		<div class="settings-group">
-			<div class="settings-body">
-				<!-- Delete Account Component -->
-				<DeleteAccount></DeleteAccount>
-			</div>
+			<!-- Delete Account Component -->
+			<DeleteAccount></DeleteAccount>
 		</div>
 
 		<!-- Legal Stuff -->
 		<h1>Account Information</h1>
 		<div class="settings-group">
-			<div class="settings-body">
-				<div class="settings-account-info">
-					<p>
-						Make sure you have read our privacy policy and terms of service.
-					</p>
-					<div class="settings-account-info-buttons">
-						<!-- Privacy Policy -->
-						<button type="button" @click="navigate('/privacy')" aria-label="Read Privacy Policy">
-							<i class="far fa-file-powerpoint"></i>
-							<span>Privacy Policy</span>
-						</button>
-						<!-- Terms of Service -->
-						<button type="button" @click="navigate('/terms')" aria-label="Read Terms of Service">
-							<i class="far fa-book-user"></i>
-							<span>Terms of Service</span>
-						</button>
-					</div>
+			<div class="settings-account-info">
+				<p>
+					Make sure you have read our privacy policy and terms of service.
+				</p>
+				<div class="settings-account-info-buttons">
+					<!-- Privacy Policy -->
+					<button type="button" @click="navigate('/privacy')" aria-label="Read Privacy Policy">
+						<i class="far fa-file-powerpoint"></i>
+						<span>Privacy Policy</span>
+					</button>
+					<!-- Terms of Service -->
+					<button type="button" @click="navigate('/terms')" aria-label="Read Terms of Service">
+						<i class="far fa-book-user"></i>
+						<span>Terms of Service</span>
+					</button>
 				</div>
 			</div>
 		</div>

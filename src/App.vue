@@ -66,6 +66,7 @@ export default {
 		return {
 			signoutDarkMode: null,
 			scrollLockPos: 0,
+			pageMounted: false,
 		};
 	},
 	created: function () {

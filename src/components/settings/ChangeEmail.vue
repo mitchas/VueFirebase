@@ -1,6 +1,6 @@
 <template>
 
-	<div class="field-row">
+	<div class="basic-field">
 		<!-- Label -->
 		<label>Email Address:</label>
 		<!-- Value -->
@@ -18,7 +18,7 @@
 				<form @submit.prevent="changeEmailAddress();" v-if="showEmailEditor" class="edit-setting-form">
 
 					<!-- New email input -->
-					<div class="field-row">
+					<div class="basic-field">
 						<label for="newEmailAddress">New email address</label>
 						<div class="field-body">
 							<input type="email" v-model="newEmailAddress" id="newEmailAddress" required>
