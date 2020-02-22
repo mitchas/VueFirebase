@@ -67,34 +67,12 @@ export default {
 				"body": body
 			}
 
-			// Flash color on Chrome/Mobile
-			_this.toastTheme(color);
-
 			// Hide after 5 seconds
 			setTimeout(function(){
 				_this.hideToast();
 			}, 5000)
 		},
-		toastTheme: function(color){
-			let _this = this;
-
-			var flashColor;
-			// Flash theme color on Chrome
-			if(color == "red"){
-				flashColor = "#FB4036";
-			}else if(color == "green"){
-				flashColor = "#06C9DB";
-			}else{
-				flashColor = "#1857EF";
-			}
-
-			document.querySelector('meta[name="theme-color"]').setAttribute('content',  flashColor);
-
-
-			setTimeout(function(){
-				document.querySelector('meta[name="theme-color"]').setAttribute('content',  "#02080A");
-			}, 5300)
-		},
+		
 
 		// Hide toast,
 		hideToast: function(){
@@ -142,9 +120,9 @@ export default {
 			right: unset;
 			width: 100%;
 			border-radius: 0;
-			box-shadow: var(--shadow);
-			bottom: unset !important;
-			top: 0;
+			border-top-right-radius: 12px;
+			border-top-left-radius: 12px;
+			bottom: 0;
 		}
 
 		// Transition down when hiding beore unmount
@@ -206,7 +184,7 @@ export default {
 
 			// Increase padding on smaller screens
 			@media (max-width: @screenSM) {
-				padding: 22px 28px 22px 18px;
+				padding: 14px 28px 14px 18px;
 			}
 
 			// Icon left on toast
@@ -220,6 +198,7 @@ export default {
 				max-width: 56px;
 				font-size: 34px;
 				box-sizing: border-box;
+				padding-bottom: 2px;
 				padding-right: 14px;
 				height: auto;
 				border-right: 1px solid var(--textLight);
@@ -227,7 +206,7 @@ export default {
 
 				// Increase icon size on smaller screens
 				@media (max-width: @screenSM) {
-					font-size: 40px;
+					font-size: 48px;
 					padding-right: 18px;
 					box-sizing: content-box;
 				}
@@ -257,11 +236,11 @@ export default {
 					font-size: 15px;
 					padding-bottom: 5px;
 					font-weight: 700;
-					letter-spacing: 0.35px;
+					letter-spacing: 0.45px;
 
 					// Increase size
 					@media (max-width: @screenSM) {
-						font-size: 20px;
+						font-size: 18px;
 					}
 				}
 				.toast-body{
@@ -362,32 +341,15 @@ export default {
 	// Toast from botttom animation
 	.toast-enter-active {
 		animation: toast-in .22s;
-		@media (max-width: @screenSM) {
-			animation: toast-in-mobile .22s;
-		}
 	}
 	.toast-leave-active {
 		animation: toast-out .3s;
-		@media (max-width: @screenSM) {
-			animation: toast-out-mobile .3s;
-		}
 	}
 	// Comes from bottom on desktop
 	@keyframes toast-in {
 		0% {
 			opacity: 0;
 			transform: translateY(250px);
-		}
-		100% {
-			opacity: 1;
-			transform: translateY(0px);
-		}
-	}
-	// Comes from top on mobile
-	@keyframes toast-in-mobile {
-		0% {
-			opacity: 0;
-			transform: translateY(-250px);
 		}
 		100% {
 			opacity: 1;
@@ -403,16 +365,6 @@ export default {
 		100% {
 			opacity: 0;
 			transform: translateY(250px);
-		}
-	}
-	@keyframes toast-out-mobile {
-		0% {
-			opacity: 1;
-			transform: translateY(0px);
-		}
-		100% {
-			opacity: 0;
-			transform: translateY(-250px);
 		}
 	}
 	

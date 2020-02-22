@@ -220,11 +220,14 @@ button{
 	// small
 	&.small{
 		height: 28px;
-		font-size: 12px;
+		font-size: 11.5px;
+		font-weight: 600;
+		padding: 0px 8px 2px 8px;
 
 		// Increase size on mobile
 		@media (max-width: @screenMD) {
 			font-size: 13px;
+			padding: 0px 10px;
 			height: 34px;
 		}
 	}
@@ -268,11 +271,11 @@ button{
 	}
 	// Inverted Colors from background
 	&.invert{
-		background-color: var(--textLighter);
+		background-color: var(--textLight);
 		color: var(--background);
 
 		&:hover{
-			background-color: var(--textLight);
+			background-color: var(--text);
 			color: var(--backgroundLayer);
 		}
 	}
