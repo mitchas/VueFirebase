@@ -2,14 +2,14 @@
 	<!-- Toast notificaion -->
 	<transition name="toast">
 
-		<div id="toast" v-bind:class="{'hide': hidingToast}" v-if="toastData.visible" @click="hideToast()">
+		<div id="toast" v-bind:class="{'hide ': hidingToast} + ' ' + toastData.color" v-if="toastData.visible" @click="hideToast()">
 			<!-- Floaing x - clicking anywhere will close it, though -->
 			<div class="toast-close">
 				<i class="fas fa-times"></i>
 			</div>
 			<!-- Contetnt -->
 			<div class="toast-content">
-				<div class="toast-icon" v-bind:class="toastData.color">
+				<div class="toast-icon">
 					<i v-bind:class="toastData.icon"></i>
 				</div>
 				<div class="toast-text">
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<!-- 5 second progress bar -->
-			<div v-bind:class="'toast-bar progress ' + toastData.color"></div>
+			<div class="toast-bar progress"></div>
 		</div>
 
 	</transition>
@@ -39,8 +39,8 @@ export default {
 				"visible": false,
 				"icon": "fas fa-times",
 				"color": "red",
-				"title": "FUCK",
-				"body": "ASS"
+				"title": "Toast title",
+				"body": "Toast body"
 			}
 		};
 	},
@@ -133,7 +133,7 @@ export default {
 		background-color: var(--backgroundLayer);
 		border-radius: 6px;
 		transition: var(--transition);
-		box-shadow: var(--shadowSmall);
+		box-shadow: var(--shadow);
 		z-index: 50000;
 		transform: translateY(0px);
 		transform-origin: center right;
@@ -186,7 +186,7 @@ export default {
 		// Hover state increases size a little, brightens close, cursor
 		&:hover{
 			cursor: pointer;
-			transform: translateY(2px);
+			transform: translateY(3px);
 			transition: var(--bezierTransitionSlow);
 
 			.toast-close{
@@ -250,6 +250,7 @@ export default {
 					max-width: none;
 					min-width: 0px;
 					padding-left: 25px;
+					padding-top: 6px;
 				}
 
 				.toast-title{
@@ -316,25 +317,32 @@ export default {
 		// Color Variations
 		// Color Variations
 		// Red
-		.toast-icon.red{
-			color: var(--red);
+		&.red{
+			.toast-icon{
+				color: var(--red);
+			}
+			.toast-bar:after{
+				background-color: var(--red);
+			}
 		}
-		.toast-bar.red:after{
-			background-color: var(--red);
-		}
+		
 		// Green
-		.toast-icon.green{
-			color: var(--green);
-		}
-		.toast-bar.green:after{
-			background-color: var(--green);
+		&.green{
+			.toast-icon{
+				color: var(--green);
+			}
+			.toast-bar:after{
+				background-color: var(--green);
+			}
 		}
 		// Yellow
-		.toast-icon.yellow{
-			color: var(--yellow);
-		}
-		.toast-bar.yellow:after{
-			background-color: var(--yellow);
+		&.yellow{
+			.toast-icon{
+				color: var(--yellow);
+			}
+			.toast-bar:after{
+				background-color: var(--yellow);
+			}
 		}
 		
 

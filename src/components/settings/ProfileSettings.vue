@@ -8,17 +8,21 @@
 		-->
 		<div class="field-row">
 			<!-- Display profile photo -->
-			<div class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.profilePhoto"></div>
-			<div class="profile-photo empty" v-if="!$store.getters.profilePhoto"></div>
+			<!-- Label elements so you can click them and trigger file upload window -->
+			<label for="uploadProfilePhoto" class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.profilePhoto"></label>
+			<label for="uploadProfilePhoto" class="profile-photo empty" v-if="!$store.getters.profilePhoto"></label>
 			<!-- Upload new file -->
 			<div class="field-body mtop-xs">
-				<label for="uploadProfilePhoto" id="uploadProfilePhotoButton" class="button" tabindex="1" aria-label="Upload new profile photo">
-					<div>
-						<span v-if="!photoUploading">Select photo</span>
-						<span v-if="photoUploading">Uploading...</span>
+				<button for="uploadProfilePhoto" id="uploadProfilePhotoButton" class="button" tabindex="1" aria-label="Upload new profile photo">
+					<span v-if="!photoUploading">
+						Select photo
 						<i class="far fa-image-polaroid"></i>
-					</div>
-				</label>
+					</span>
+					<span v-else>
+						Uploading...
+						<i class="far fa-spinner-third fa-spin"></i>
+					</span>
+				</button>
 				<input type="file" id="uploadProfilePhoto" @change="uploadPhoto" hidden/>
 			</div>
 		</div>
@@ -232,12 +236,20 @@ export default {
 	// Profile photo
 	.profile-photo{
 		display: block;
-		width: 122px;
-		height: 122px;
+		width: 140px;
+		height: 140px;
 		border-radius: 50%;
 		background-size: cover;
 		margin: 0 0 8px 0;
 		box-sizing: border-box;
+		transition: var(--transition);
+		background-blend-mode: multiply;
+		background-color: transparent;
+
+		// Center mobile
+		@media (max-width: @screenSM) {
+			margin: 0 auto 8px auto;
+		}
 
 		// No profile photo
 		&.empty{
@@ -259,17 +271,20 @@ export default {
 				font-family: var(--fontAwesome);
 			}
 		}
+
+		// Hover, pointer
+		&:hover{
+			cursor: pointer;
+			transition: var(--transition);
+			background-color: rgba(10,30,50,0.05);
+		}
+		
 	}
-	// Upload new photo button
+
 	#uploadProfilePhotoButton{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		width: fit-content;
-		font-size: 12px;
-		margin: 0;
-		padding: 0;
-		width: 122px;
-		text-align: center;
+		@media (max-width: @screenSM) {
+			margin: 0 auto 0 auto;
+			display: block;
+		}
 	}
 </style>

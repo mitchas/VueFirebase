@@ -13,9 +13,9 @@
 			<div class="profile-wrapper" v-if="userLoaded && !userNotFound">
 				
 				<!-- Profile photo -->
-				<div class="profile-photo" v-if="profilePhotoURL" v-bind:style="'background-image: url(' + profilePhotoURL + ');'"></div>
+				<div class="user-profile-photo" v-if="profilePhotoURL" v-bind:style="'background-image: url(' + profilePhotoURL + ');'"></div>
 				<!-- No photo -->
-				<div class="profile-photo empty" v-if="!profilePhotoURL"></div>
+				<div class="user-profile-photo empty" v-if="!profilePhotoURL"></div>
 
 				<!-- Name -->
 				<h1 v-if="profileData.display_name">
@@ -30,7 +30,7 @@
 				</h2>
 
 				<!-- User since -->
-				<div class="user-created">
+				<div class="user-created" v-if="profileData.user_created">
 					<label>User since:</label>
 					<span>
 						{{ new Date(profileData.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 import metaMixin from "@/components/mixins/metaMixin.js";
 import firebase from "firebase";
 import { db } from "@/store/firebase";
@@ -73,13 +75,22 @@ export default {
 			profilePhotoURL: "",
 		};
 	},
-	created: function () {
-		// Capitalize username and set as title
-		this.updateMeta(this.profileUsername.charAt(0).toUpperCase() + this.profileUsername.slice(1) + "'s Profile", "")
-		// Load user based off username
-		this.getUserUid();
+	mounted: function () {
+		this.initialLoad();
+	},
+	beforeRouteUpdate: function(to, from, next){
+		this.userLoaded = false;
+		this.profileUsername = to.params.username
+		this.initialLoad();
+		next();
 	},
 	methods: {
+		initialLoad: function(){
+			// Capitalize username and set as title
+			this.updateMeta(this.profileUsername.charAt(0).toUpperCase() + this.profileUsername.slice(1) + "'s Profile", "")
+			// Load user based off username
+			this.getUserUid();
+		},
 		getUserUid: function(){
 			let _this = this;
 
@@ -166,7 +177,7 @@ export default {
 	.profile-wrapper{
 
 		// Profile photo
-		.profile-photo{
+		.user-profile-photo{
 			display: block;
 			height: 120px;
 			width: 120px;

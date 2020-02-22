@@ -9,28 +9,28 @@
 		</div>
 
 		<!--  
-			Account Nav
-			Account Nav Floated right
-			Account Nav
+			Settings Nav
+			Settings Nav Floated right
+			Settings Nav
 		-->
-		<nav id="account" aria-label="Account Menu">
+		<nav id="settingsNav" aria-label="Settings Menu">
 
 			<!-- Nav for signed-in users -->
-			<div class="account-nav-user">
-				<div class="account-nav-dropdown" @click="showAccountPopover = !showAccountPopover" @mouseleave="showAccountPopover = false">
+			<div class="settings-nav">
+				<div class="settings-nav-dropdown" @click="showSettingsPopover = !showSettingsPopover" @mouseleave="showSettingsPopover = false">
 					<!-- Hover label to show dropdown -->
 					<div class="hover-label">
 						<!-- Username -->
 						<span v-if="$store.getters.isSignedIn">{{ $store.getters.userPreferences.username }}</span>
 						<!-- Profile photo - if signed in and has one -->
-						<div class="profile-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.isSignedIn && $store.getters.profilePhoto"></div>
+						<div class="hover-label-photo" v-bind:style="'background-image: url(' + $store.getters.profilePhoto + ');'" v-if="$store.getters.isSignedIn && $store.getters.profilePhoto"></div>
 						<!-- Not signed in -->
 						<span v-if="!$store.getters.isSignedIn">Hey there!</span>
 						<!-- Chevron down -->
-						<i v-bind:class="{'far fa-chevron-circle-down': !showAccountPopover, 'far fa-chevron-circle-up': showAccountPopover}" v-if="!$store.getters.isSignedIn || !$store.getters.profilePhoto"></i>
+						<i v-bind:class="{'far fa-chevron-circle-down': !showSettingsPopover, 'far fa-chevron-circle-up': showSettingsPopover}" v-if="!$store.getters.isSignedIn || !$store.getters.profilePhoto"></i>
 					</div>
 					<!-- Popup on hover/focus -->
-					<div class="account-nav-popover" v-bind:class="{'visible': showAccountPopover}">
+					<div class="settings-nav-popover" v-bind:class="{'visible': showSettingsPopover}">
 						<!-- Sign In -->
 						<!-- Only show to signed out users -->
 						<button class="popover-link" @click="navigate('/signin')" aria-label="Login" v-if="!$store.getters.isSignedIn">
@@ -95,7 +95,7 @@ export default {
 	],
 	data() {
 		return {
-			showAccountPopover: false,
+			showSettingsPopover: false,
 		};
 	},
 	methods: {
@@ -114,9 +114,9 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
-		padding: 0 25px;
+		padding: 0 20px;
 		box-sizing: border-box;
-		height: 60px;
+		height: 70px;
 		position: sticky;
 		top: 0px;
 		background: var(--navBackground);
@@ -135,7 +135,6 @@ export default {
 		// Adjust padding on larger screens
 		@media (min-width: @screenMD) {
 			padding: 0 35px;
-			height: 70px;
 		}
 
 		// Logo
@@ -163,22 +162,22 @@ export default {
 	}
 
 
-	// Account Nav
-	// Account Nav
-	// Account Nav
+	// settings Nav
+	// settings Nav
+	// settings Nav
 	// Contained inside top nav- wanted styling seperatet
-	nav#account{
+	nav#settingsNav{
 		display: flex;
 		box-sizing: border-box;
 		height: 100%;
 		// Username with dropdown
 		// For signed in users
-		.account-nav-user{
+		.settings-nav{
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 
-			.account-nav-dropdown{
+			.settings-nav-dropdown{
 				position: relative;
 				padding: 8px 0;
 				z-index: 100;
@@ -197,14 +196,15 @@ export default {
 					justify-content: flex-end;
 
 					// Profile photo
-					.profile-photo{
+					.hover-label-photo{
 						display: block;
 						height: 34px;
 						width: 34px;
 						border-radius: var(--borderRadius);
-						box-shadow: var(--shadow);
 						margin-left: 10px;
 						background-size: cover;
+						position: relative;
+						top: -2px;
 
 						// Adjust padding on larger screens
 						@media (min-width: @screenMD) {
@@ -249,7 +249,7 @@ export default {
 
 
 				// Popup on hover
-				.account-nav-popover{
+				.settings-nav-popover{
 					display: block;
 					width: 200px;
 					position: absolute;

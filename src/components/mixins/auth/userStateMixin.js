@@ -3,12 +3,12 @@
 import firebase from "firebase";
 import { db } from "@/store/firebase";
 
-import darkModeMixin from "@/components/mixins/ui/darkModeMixin.js";
+import preferencesMixin from "@/components/mixins/ui/preferencesMixin.js";
 
 
 export default {
 	mixins: [
-		darkModeMixin,
+		preferencesMixin,
 	],
 	methods: {
 		//////////////////////////////

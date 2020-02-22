@@ -66,7 +66,6 @@ export default {
 		return {
 			signoutDarkMode: null,
 			scrollLockPos: 0,
-			pageMounted: false
 		};
 	},
 	created: function () {
@@ -150,12 +149,8 @@ export default {
 		z-index: 60;
 		display: flex;
 		min-height: 85vh;
-		min-height: calc(~'100vh - 70px');
+		min-height: calc(~'100% - 70px');
 
-		// Adjust max height
-		@media (max-width: @screenMD) {
-			min-height: calc(~'100% - 60px');
-		}
 
 		// Main body content
 		// Main body content

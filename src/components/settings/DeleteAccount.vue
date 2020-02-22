@@ -6,9 +6,9 @@
 			</p>
 			<!-- Consequences -->
 			<ul id="consequences">
-				<li><b>ALL</b> of your data will be deleted (favorites, comments, posts, etc)</li>
-				<li>Your username will <b>NOT</b> be released. Nobody else will be able to take it, but you also won't be able to get it back. This is to done to prevent impersonations.</li>
-				<li>Anything you've submitted to be made public will remain on the site.</li>
+				<li><b>ALL</b> of your profile and user data will be deleted.</li>
+				<li>Your username will <b>NOT</b> be released. Nobody else will be able to take it, but you also won't be able to get it back. This is done to prevent impersonations.</li>
+				<li>Any public comments or submissions you've made will <b>NOT</b> be deleted, but will no longer link to your profile.</li>
 				<li>You will be able to create a new account with the same email address in the future.</li>
 			</ul>
 
@@ -51,12 +51,12 @@
 						<!-- Body Content -->
 						<div class="modal-body">
 							<p>
-								Type <b>Goodbye</b> in the box below, then click the button to delete your account forever.
+								Type <b>goodbye</b> in the box below, then click the button to delete your account forever.
 							</p>
 
 							<div class="field-row">
 								<div class="field-body">
-									<input type="text" v-model="textConfirmation" id="goodbye" placeholder=" " required aria-label="Type the word GOODBYE to continue" />
+									<input type="text" v-model="textConfirmation" id="goodbye" placeholder="goodbye" required aria-label="Type the word GOODBYE to continue"  autocorrect="off" autocapitalize="none"/>
 								</div>
 							</div>
 
@@ -220,6 +220,29 @@ export default {
 			@media (max-width: @screenSM) {
 				justify-content: center;
 			}
+		}
+	}
+
+
+	// #goodbye input
+	#goodbye{
+		display: block;
+		width: 200px;
+		text-align: center;
+		margin: 0 auto;
+		font-size: 30px;
+		font-family: var(--sans);
+		font-weight: 600;
+		height: 50px;
+		letter-spacing: 2px;
+		color: var(--red);
+		border: none;
+		background-color: var(--redTransparent);
+
+		// Make placeholder red, too
+		&::placeholder{
+			color: var(--red);
+			opacity: 0.3;
 		}
 	}
 </style>

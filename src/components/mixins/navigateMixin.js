@@ -1,5 +1,4 @@
 // Navigate Mixin
-
 export default {
 	methods: {
 		///////////////////////
@@ -10,6 +9,7 @@ export default {
 		// This lets you use custom elements that are accessible/focusable, rather than router-link
 		// then use @click to navigate()
 		navigate: function(route) {
+
 			if(route == this.$route.path){
 				return;
 			}else{

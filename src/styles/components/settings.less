@@ -12,19 +12,14 @@
 
 	// Add padding around field setting rows
 	.field-row{
-		padding: 10px 0;
+		padding: 8px 0;
 	}
 }
 
 // Individual groups of settings
 .settings-group{
-	margin: 20px auto 60px auto;
+	margin: 10px auto 30px auto;
 	padding-bottom: 60px;
-	border-bottom: 1px solid var(--border);
-
-	&:last-child{
-		border-bottom: none;
-	}
 
 	// Settings group body
 	.settings-body{
@@ -36,7 +31,8 @@
 // Clickable pencil icon button
 // On settings pages and in components
 .edit-preference{
-	color: var(--greyHover);
+	color: var(--text);
+	opacity: 0.5;
 	margin: 0 0 0 5px;
 	padding: 0px;
 	font-size: 15px;
@@ -49,6 +45,7 @@
 	&:hover{
 		cursor: pointer;
 		text-decoration: none;
+		opacity: 1;
 		color: var(--primary);
 	}
 }

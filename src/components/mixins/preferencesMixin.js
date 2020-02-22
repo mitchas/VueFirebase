@@ -9,14 +9,17 @@ export default {
 		// Save prefs to firestore //
 		////////////////////////////
 		savePrefs: function(){
-			var uid = this.$store.getters.user.uid;
-			var prefs = this.$store.getters.userPreferences;
+			// Only if user is signed in
+			if(this.$store.getters.isSignedIn){
+				var uid = this.$store.getters.user.uid;
+				var prefs = this.$store.getters.userPreferences;
 
-			db.collection("users").doc(uid).set(prefs, { merge: true }).then(() => {
-				console.log('Successfully updated user prefs')
-			}).catch(error => {
-				console.error('There was an error editing prefs: ' + error)
-			})
+				db.collection("users").doc(uid).set(prefs, { merge: true }).then(() => {
+					console.log('Successfully updated user prefs')
+				}).catch(error => {
+					console.error('There was an error editing prefs: ' + error)
+				})
+			}
 		},
 		/////////////////////////////
 		//    Dark Mode Toggle    //
@@ -41,16 +44,13 @@ export default {
 				}
 			}
 			// Save dark mode pref to Firebase
-			if(this.$store.getters.isSignedIn){
-				this.savePrefs();
-			}
+			this.savePrefs();
 
 		},
 		////////////////////////
 		// Toggle animations //
 		//////////////////////
 		toggleAnimations: function(){
-			var prefs = this.$store.getters.userPreferences;
 			
 			// Toggle no-animations class on body tag to toggle them
 			if(this.$store.getters.userPreferences.animations){
@@ -62,9 +62,7 @@ export default {
 			}
 
 			// Save animations pref to Firebase
-			if(this.$store.getters.isSignedIn){
-				this.savePrefs();
-			}
+			this.savePrefs();
 		}
 	}
 };

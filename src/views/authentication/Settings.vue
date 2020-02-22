@@ -19,6 +19,22 @@
 				<!-- Email Address -->
 				<ChangeEmail></ChangeEmail>
 
+				<!-- Date Created -->
+				<div class="field-row">
+					<label>User Since:</label>
+					<div class="field-body">
+						<!-- Date created -->
+						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
+						<!-- Time since (ex "2 days ago") -->
+						<small>
+							{{ new Date($store.getters.userPreferences.user_created) | moment("from") }}
+						</small>
+						<!-- User number -->
+						<small if="$store.getters.userPreferences.user_number">
+							You were user #{{ $store.getters.userPreferences.user_number }} 
+						</small>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -34,7 +50,7 @@
 		<h1>General Preferences</h1>
 		<div class="settings-group">
 			<div class="settings-body">
-				<!-- Username -->
+				<!-- UI Animations -->
 				<div class="setting-toggle">
 					<div class="setting-toggle-input">
 						<input id="animationToggle" type="checkbox" class="toggle" v-model="$store.getters.userPreferences.animations" @change="toggleAnimations()"/>
@@ -65,35 +81,36 @@
 			</div>
 		</div>
 
-		<!-- Other Stuff -->
-		<h1>Other Stuff</h1>
-		<div class="settings-group">
-			<div class="settings-body">
-
-				<!-- Date Created -->
-				<div class="field-row">
-					<label>User Since:</label>
-					<div class="field-body">
-						{{ new Date($store.getters.userPreferences.user_created) | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}
-						<small>({{ new Date($store.getters.userPreferences.user_created) | moment("from") }})</small>
-					</div>
-				</div>
-				<!-- User Number -->
-				<div class="field-row" if="$store.getters.userPreferences.user_number">
-					<label>User Number:</label>
-					<div class="field-body">
-						{{ $store.getters.userPreferences.user_number }}
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!-- Delete Account -->
 		<h1>Delete Account</h1>
 		<div class="settings-group">
 			<div class="settings-body">
 				<!-- Delete Account Component -->
 				<DeleteAccount></DeleteAccount>
+			</div>
+		</div>
+
+		<!-- Legal Stuff -->
+		<h1>Account Information</h1>
+		<div class="settings-group">
+			<div class="settings-body">
+				<div class="settings-account-info">
+					<p>
+						Make sure you have read our privacy policy and terms of service.
+					</p>
+					<div class="settings-account-info-buttons">
+						<!-- Privacy Policy -->
+						<button type="button" @click="navigate('/privacy')" aria-label="Read Privacy Policy">
+							<i class="far fa-file-powerpoint"></i>
+							<span>Privacy Policy</span>
+						</button>
+						<!-- Terms of Service -->
+						<button type="button" @click="navigate('/terms')" aria-label="Read Terms of Service">
+							<i class="far fa-book-user"></i>
+							<span>Terms of Service</span>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -107,20 +124,18 @@
 	import ChangeEmail from "@/components/settings/ChangeEmail";
 	import ProfileSettings from "@/components/settings/ProfileSettings";
 	import DeleteAccount from "@/components/settings/DeleteAccount";
-	import toastMixin from "@/components/mixins/ui/toastMixin.js";
 	import metaMixin from "@/components/mixins/metaMixin.js";
 	import preferencesMixin from "@/components/mixins/preferencesMixin.js";
 	import firebase from "firebase";
-	import scrollLockMixin from "@/components/mixins/ui/scrollLockMixin.js";
+	import navigateMixin from "@/components/mixins/navigateMixin.js";
 
 
 	export default {
 		name: 'settings',
 		mixins: [
-			toastMixin,
-			scrollLockMixin,
 			metaMixin,
 			preferencesMixin,
+			navigateMixin,
 		],
 		data() {
 			return {
@@ -153,5 +168,46 @@
 <style lang="less">
 	@import '~@/styles/variables.less';
 
+	// Account information
+	.settings-account-info{
+
+		.settings-account-info-buttons{
+			display: flex;
+			justify-content: flex-start;
+
+			@media (max-width: @screenSM) {
+				justify-content: space-between;
+			}
+
+			button{
+				background-color: transparent;
+				border: none;
+				padding: 10px 0;
+				font-size: 16px;
+				font-weight: 600;
+				color: var(--text);
+				margin-right: 35px;
+				margin: 10px 35px 0 0;
+				letter-spacing: 0.4px;
+
+				i{
+					margin-right: 10px;
+					transform-origin: center center;
+					transform: scale(1.2);
+				}
+
+				// No margin on mobile
+				@media (max-width: @screenSM) {
+					margin: 5px 10px;
+				}
+
+				// Hover state
+				&:hover{
+					cursor: pointer;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 
 </style>
