@@ -14,7 +14,7 @@
 /node_modules
 
 # Firebase
-.firebaserc
+/.firebaserc
 
 # profiling files
 chrome-profiler-events.json
