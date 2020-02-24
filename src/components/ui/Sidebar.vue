@@ -127,7 +127,7 @@ export default {
 			flex-direction: column;
 			box-sizing: border-box;
 			position: sticky;
-			// 94 offset to account for top bar and padding
+			// 92 offset to account for top bar and padding
 			top: 92px;
 
 			// Large mobile - float bottom right

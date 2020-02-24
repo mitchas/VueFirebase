@@ -25,7 +25,7 @@ Vue.use(Router);
 const router = new Router({
 	mode: 'history',
 	linkExactActiveClass: 'is-active',
-	base: process.env.BASE_URL,
+	base: process.env.VUE_APP_BASE_PATH,
 	// Return to top after route change
 	scrollBehavior() {
 		return { x: 0, y: 0 };

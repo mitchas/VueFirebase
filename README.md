@@ -41,11 +41,12 @@ Install the firebase cli, and run `firebase init` in the root directory of this 
  * Do not overwrite index.html
  * Do not overwrite storage.rules
  
-### Firebase Secrets
-Get your Firebase secrets from the Firebase console and fill them in on `.env` and `.env.production`. The production secrets will be used when building if you want to use a separate database for testing.
+### Environment Variables
+Fill in your VUE_APP_BASE_URL and VUE_APP_BASE_PATH in `.env` and `.env.production`. The base URL should be the bare URL it'll be hosted at (ie https://example.com - no trailing slash) and the base path should be the path at the URL (ie /app if it'll be at example.com/app). For the root, leave it at /.
+
+Get your Firebase secrets from the Firebase console and fill them in as well. The production secrets will be used when building if you want to use a separate database for testing.
 
 **Don't commit your secrets to git!!!**
-
 
 Rename or copy your environment variable files to `.env.local` and `.env.production.local` to prevent that from happening. Git will ignore `.local` files.
 

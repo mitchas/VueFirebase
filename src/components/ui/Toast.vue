@@ -178,13 +178,13 @@ export default {
 		.toast-content{
 			flex-grow: 3;
 			box-sizing: border-box;
-			padding: 18px 24px 18px 14px;
+			padding: 18px 24px 20px 14px;
 			display: flex;
 			color: var(--text);
 
 			// Increase padding on smaller screens
 			@media (max-width: @screenSM) {
-				padding: 14px 28px 14px 18px;
+				padding: 18px 28px 23px 18px;
 			}
 
 			// Icon left on toast
@@ -196,20 +196,13 @@ export default {
 				width: 56px;
 				min-width: 56px;
 				max-width: 56px;
-				font-size: 34px;
-				box-sizing: border-box;
+				font-size: 38px;
+				box-sizing: content-box;
 				padding-bottom: 2px;
-				padding-right: 14px;
+				padding-right: 18px;
 				height: auto;
 				border-right: 1px solid var(--textLight);
 				color: var(--primary);
-
-				// Increase icon size on smaller screens
-				@media (max-width: @screenSM) {
-					font-size: 48px;
-					padding-right: 18px;
-					box-sizing: content-box;
-				}
 			}
 
 			// Body of the toastt
@@ -237,23 +230,11 @@ export default {
 					padding-bottom: 5px;
 					font-weight: 700;
 					letter-spacing: 0.45px;
-
-					// Increase size
-					@media (max-width: @screenSM) {
-						font-size: 18px;
-					}
 				}
 				.toast-body{
 					font-size: 12px;
-					line-height: 15px;
-					letter-spacing: 0.2px;
-
-					// Increase size
-					@media (max-width: @screenSM) {
-						font-size: 16px;
-						line-height: 20px;
-						letter-spacing: 0.45px;
-					}
+					line-height: 18px;
+					letter-spacing: 0.45px;
 				}
 			}
 
