@@ -1,15 +1,24 @@
+<!--
+//  Terms of Service
+// _________________________
+//  Terms of Service document
+// 
+-->
+
 <template>
 	<div class="page">
 
-		<!-- Terms of service -->
-		<!-- Terms of service -->
-		<!-- Terms of service -->
+		<!-- Page Header -->
 		<h1>Terms of Service</h1>
-		<span class="doc-v">v.1.0 - February 10, 2020</span>
+		<div class="badge yellow mtop-xs">
+			<i class="far fa-sync-alt"></i>
+			<span>v.1.0 - MONTH DAY, 2020</span>
+		</div>
 		<p>
-			ABCDEFG's Terms of Service was last updated and went into effect <b>February 10, 2020</b>.
+			ABCDEFG's Terms of Service was last updated and went into effect <b>MONTH DAY, 2020</b>.
 		</p>
 
+		<!-- Start of terms -->
 		<h2 class="mtop-md">
 			1. Terms
 		</h2>
@@ -72,7 +81,6 @@
 </template>
 
 <script>
-import metaMixin from "@/components/mixins/metaMixin.js";
 
 export default {
   	name: "TermsOfService",
@@ -80,10 +88,8 @@ export default {
 
 	},
 	mixins: [
-		metaMixin
 	],
 	created: function () {
-		this.updateMeta("Terms of Service", "Read our Terms of Service")
 	},
 	methods: {
 	}
@@ -91,19 +97,5 @@ export default {
 </script>
 
 <style lang="less">
-	@import '~@/styles/variables.less';
-
-	.doc-v{
-		background-color: var(--secondary);
-		box-sizing: border-box;
-		font-size: 12px;
-		margin: 10px 0;
-		display: inline-block;
-		padding: 5px 6px 4px 6px;
-		border-radius: var(--borderRadiusSmall);
-		color: var(--textInvert);
-		font-family: var(--sans);
-		font-weight: 600;
-	}
-
+	// @import '~@/styles/variables.less';
 </style>

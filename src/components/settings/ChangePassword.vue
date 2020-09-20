@@ -1,36 +1,65 @@
+<!--
+//  Password Email component
+// _________________________
+//
+//  Simple form element with two password inputs to change password
+// 		Button below to update password
+// 		Checks if passwords patch, then submits to firebase to change
+// 		If user hasn't signed in recently, the ReAuth component is used to prompt user for their password again
+// 
+// 		changePassword()
+// 			Sends password to firebase to update
+// 			Toast whether results successful or not
+// 
+-->
+
 <template>
 	<div>
 		<form id="passwordChange" @submit.prevent="changePassword()">
 			<!-- New Password -->
-			<div class="basic-field">
+			<div class="field">
 				<label for="newPassword">New password</label>
 				<div class="field-body">
 					<input type="password" v-model="newPassword" id="newPassword" placeholder=" " required>
 				</div>
 			</div>
 			<!-- Verify Password -->
-			<div class="basic-field">
+			<div class="field mtop-xs">
 				<label for="verifyNewPassword">Retype new password</label>
 				<div class="field-body">
 					<input type="password" v-model="verifyNewPassword" id="" placeholder=" " required>
 				</div>
 			</div>
+			
+			<!-- Show errors -->
+			<!-- No match -->
+			<transition name="basic">
+				<Callout
+					v-if="(verifyNewPassword.length >= newPassword.length) && verifyNewPassword != newPassword"
+					icon="far fa-exclamation-circle"
+					class="mtop-sm"
+					color="red"
+					size="narrow">
+					<span>Those passwords don't match.</span>
+				</Callout>
+			</transition>
+			<!-- Not long enough -->
+			<transition name="basic">
+				<Callout
+					v-if="newPassword.length > 0 && newPassword.length < 6 && verifyNewPassword.length > 0"
+					icon="far fa-exclamation-circle"
+					class="mtop-sm"
+					color="red"
+					size="narrow">
+					<span>Your password must be at least 6 characters.</span>
+				</Callout>
+			</transition>
+
 			<!-- Save New Password -->
-			<button type="submit" class="button save-setting-button" :disabled="newPassword.length < 6 || newPassword != verifyNewPassword">
+			<button type="submit" class="button mtop-sm" :disabled="newPassword.length < 6 || newPassword != verifyNewPassword">
 				<span>Save Password</span>
 				<i class="far fa-lock-alt"></i>
 			</button>
-			<!-- Show errors -->
-			<div class="password-error">
-				<!-- If passwords dont match -->
-				<span v-if="(verifyNewPassword.length >= newPassword.length) && verifyNewPassword != newPassword">
-					Your passwords don't match
-				</span>
-				<!-- If password too short -->
-				<span v-if="newPassword.length > 0 && newPassword.length < 6 && verifyNewPassword.length > 0">
-					Your password must be at least 6 characters.
-				</span>
-			</div>
 		</form>
 
 
@@ -41,17 +70,19 @@
 </template>
 
 <script>
-import ReAuth from "@/components/settings/ReAuth";
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
 import firebase from "firebase";
+// Components
+import ReAuth from "@/components/settings/ReAuth";
+import Callout from "@/components/ui/Callout";
+// Mixins
 
 export default {
 	name: "ChangePassword",
 	mixins: [
-		toastMixin
 	],
 	components: {
-		ReAuth
+		ReAuth,
+		Callout,
 	},
 	data() {
 		return {
@@ -61,6 +92,9 @@ export default {
 		};
 	},
 	methods: {
+		////////////////////////////
+		//    Change Password    //
+		//////////////////////////
 
 		changePassword: function(){
 
@@ -105,26 +139,6 @@ export default {
 			width: 100%;
 			max-width: none;
 		}
-
-		// Submit button
-		button{
-			margin-top: 12px;
-		}
-
-		.password-error{
-			display: block;
-			box-sizing: border-box;
-			padding: 4px 0 0 0;
-
-			span{
-				text-align: left;
-				font-size: 11.5px;
-				font-weight: 500;
-				letter-spacing: 0.2px;
-				color: var(--red);
-			}
-		}
-
 	}
 	
 </style>

@@ -1,39 +1,65 @@
+<!--
+// 
+// Home.vue
+// _________________________
+//	Home page view
+//
+// -->
+
 <template>
-	<div class="page">
+	<div class="page full-width" id="homePage">
 
-		<h1>Home</h1>
+		<div class="padded">
+			<Callout
+				icon="far fa-box-heart"
+				class="mbottom-sm"
+				color=""
+				size="">
+				<span>Welcome to <b>ABCDEFG</b>. This is a template built on Vue and Firebase, from <a @click="tab('https://github.com/mitchas/vuefirebase')">github.com/mitchas/vuefirebase.</a></span>
+			</Callout>
+		</div>
+		<div class="max-width-large padded">
 
-		<p>
-			This is the home page.
-		</p>
+			<h1>App Loaded</h1>
+
+		</div>
+
 
 	</div>
 </template>
 
 <script>
-// @ is an alias to /src
+require('vue-moment');
 import { db } from "@/store/firebase";
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
-import metaMixin from "@/components/mixins/metaMixin.js";
+// Components
+import Callout from "@/components/ui/Callout";
+// Mixins
+// Keyboard shortcuts mixin - esc closes modal
+import shortcut from "@/components/mixins/keyboardShortcutMixin.js";
+
 
 export default {
 	name: "home",
 
 	components: {
+		Callout,
 	},
 
 	mixins: [
-		toastMixin,
-		metaMixin
+		// Keyboard shortcut example
+		shortcut('escape', function() {
+			console.log("ESCAPE AH")
+		}),
 	],
 
 	data() {
 		return {
+			today: new Date(),
 		};
 	},
 
 	mounted() {
-		this.updateMeta("Home", "This is the home page description.")
+		
 	},
 
 	computed: {

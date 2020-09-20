@@ -1,10 +1,15 @@
+// 
+// This PROBABLY doesnt need to be changed ever
+// 
+// 		This file takes secrets from the .env files to create the connection to firebase.
+// 
+// 		Again, don't change anything here. Just change your values in the .env files (see ReadMe)
+// 
+
 import { firebase } from "@firebase/app";
 import "@firebase/firestore";
 
 // Connect Firebase
-// Copy .env and .env.production to make .env.local and .env.production.local
-// At the root of the project
-// And fill in your secrets 
 const firebaseApp = firebase.initializeApp({
 	apiKey: process.env.VUE_APP_FIREBASE_APIKEY,
 	authDomain: process.env.VUE_APP_FIREBASE_AUTHDOMAIN,

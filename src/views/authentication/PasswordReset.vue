@@ -1,59 +1,49 @@
+<!--
+//  Password reset view
+// _________________________
+//  Loads authentican cmponent with single field for email address for resetting password
+// 
+// 		resetPassword()
+// 			- Sends email to user with instructions for resetting password (Through firebase, no custom page)
+// 			- Toast on fail
+// 		
+-->
 <template>
-	<div class="auth-page">
 
-		<!-- 
-			========================
-			========================
-			Password Reset Form 
-			========================
-			========================
-		-->
-		<div class="auth-page-header">
-			<h1>Forgot your password?</h1>
+	<AuthenticationPage
+		header="Forgot your Password?"
+		v-bind:disabled="email.length < 5" 
+		v-bind:formBottom="['Nevermind,', '/signin/', 'I know my password.']"
+		submitText="Reset Password"
+		v-bind:formLoading="accountLoading"
+		@formSubmitted="resetPassword()">
+
+		<!-- Email -->
+		<div class="field">
+			<label for="passwordResetEmail">Email address</label>
+			<div class="field-body">
+				<input type="email" v-model="email" id="passwordResetEmail" placeholder=" " required>
+			</div>
 		</div>
-		<form class="auth-form-body" @submit.prevent="resetPassword(); accountLoading = true">
-			<!-- Email -->
-			<div class="basic-field">
-				<label for="passwordResetEmail">Email address</label>
-				<div class="field-body">
-					<input type="email" v-model="email" id="passwordResetEmail" placeholder=" " required>
-				</div>
-			</div>
 
-			<!-- Send password reset email -->
-			<button class="button auth-button" type="submit" :disabled="email.length < 5 || accountLoading" aria-label="Reset Password">
-				<span v-if="accountLoading">Loading</span>
-				<span v-else>Reset Password</span>
-				<i v-bind:class="{ 'fad fa-chevron-circle-right': !accountLoading, 'far fa-spinner-third fa-spin': accountLoading }"></i>
-			</button>
-
-			<!-- Forgot Password -->
-			<div class="auth-bottom">
-				<p>
-					Nevermind,
-					<router-link to="/signin">I know my password.</router-link>
-				</p>
-			</div>
-		</form>
-
-	</div>
-
-	
+	</AuthenticationPage>
 
 </template>
 
 
 <script>
 import firebase from "firebase";
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
-import metaMixin from "@/components/mixins/metaMixin.js";
+// Components
+import AuthenticationPage from "@/components/user/AuthenticationPage";
+// Mixins
 
 export default {
 	name: "passwordReset",
 	mixins: [
-		toastMixin,
-		metaMixin
 	],
+	components: {
+		AuthenticationPage,
+	},
 	data() {
 		return {
 			email: "",
@@ -62,40 +52,38 @@ export default {
 		};
 	},
 	created: function () {
-		this.updateMeta("Reset Password", "This is the reset password page description.")
 	},
 	methods: {
 
-		// Send password reset email
-		// Done through firebase
+		//////////////////////////////////////////
+		//// Password Reset through Firebase ////
+		//////////////////////////////////////////
 		resetPassword: function(){
 			let _this = this;
 			var auth = firebase.auth();
 			var emailAddress = _this.email;
 
 			auth.sendPasswordResetEmail(emailAddress).then(function() {
-				// Email sent.
-				_this.toast("Check your email", "We sent you instructions for resetting your password.", "green", "far fa-envelope-open-text");
-				_this.accountLoading = false;
-				// Redirect to signin
-				_this.$router.push("/signin")
+				console.log("Password Reset email sent.");
 			}).catch(function(error) {
-				// An error happened.
-				_this.accountLoading = false;
-				_this.toast("Something went wrong", error.message, "red", "far fa-siren-on");
+				console.log(error);
 			});
+			// Email sent.
+			_this.toast("Check your email", "We'll send you instructions if there's an account under that address.", "green", "far fa-envelope-open-text");
+			_this.accountLoading = false;
+			// Redirect to signin
+			_this.$router.push("/signin")
 		},
 		
 	}
 };
-
 
 </script>
 
 
 <style lang="less">
 
-	@import '~@/styles/variables.less';
+	// @import '~@/styles/variables.less';
 
 </style>
 

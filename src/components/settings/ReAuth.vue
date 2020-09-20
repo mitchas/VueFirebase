@@ -1,3 +1,15 @@
+<!--
+//  ReAuth component
+// _________________________
+//
+//  	- Prompts user to re-enter password in modal,
+// 		- Required by firebase for certain operations - password change, delete account, email change, etc.
+// 
+// 		reauthenticate() emits 'reauthenticated' to let parent component know it was successful, and to continue. 
+// 			- Toast if password error 
+// 
+-->
+
 <template>
 	<div>
 
@@ -9,41 +21,37 @@
 
 			<div class="modal-wrapper" v-on:click.self="closeAuth()" v-if="showModal">
 
+				<form v-if="showModal" class="modal small" tabindex="0" ref="modal" @submit.prevent="reauthenticate();">
 
-					<form v-if="showModal" class="modal small" @submit.prevent="reauthenticate();">
-
-						<!-- Close Modal (optional) -->
-						<!-- <i class="far fa-times modal-close" @click="closeAuth()"></i> -->
-						
-						<!-- Header -->
-						<div class="modal-title">
-							Enter your password
-						</div>
-						<!-- Body Content -->
-						<div class="modal-body">
-							<p>
-								You'll need to re-enter your password to do that.
-							</p>
-
-							<div class="basic-field mtop-sm">
-								<label for="reAuthPassword">Password</label>
-								<div class="field-body">
-									<input type="password" v-model="password" id="reAuthPassword" placeholder=" " required>
-								</div>
+					<!-- Close Modal (optional) -->
+					<!-- <i class="far fa-times modal-close" @click="closeAuth()"></i> -->
+					
+					<!-- Header -->
+					<div class="modal-title">
+						Enter your password
+					</div>
+					<!-- Body Content -->
+					<div class="modal-body">
+						<p>
+							You'll need to re-enter your password to do that.
+						</p>
+						<div class="field mtop-sm">
+							<label for="reAuthPassword">Password</label>
+							<div class="field-body">
+								<input type="password" v-model="password" id="reAuthPassword" placeholder=" " required>
 							</div>
-
 						</div>
-						<!-- Footer/Buttons -->
-						<div class="modal-footer">
-							<button class="button transparent" type="button" @click="closeAuth()">Cancel</button>
-							<button class="button" type="submit" :disabled="!password.length" aria-label="Continue">
-								<span v-if="reAuthLoading">Loading</span>
-								<span v-else>Continue</span>
-								<i v-bind:class="{ 'far fa-long-arrow-right': !reAuthLoading, 'far fa-spinner-third fa-spin': reAuthLoading }"></i>
-							</button>
-						</div>
-
-					</form> <!-- End modal body/form -->
+					</div>
+					<!-- Footer/Buttons -->
+					<div class="modal-footer">
+						<button class="button grey" type="button" @click="closeAuth()">Cancel</button>
+						<button class="button" type="submit" :disabled="!password.length" aria-label="Continue">
+							<span v-if="reAuthLoading">Loading</span>
+							<span v-else>Continue</span>
+							<i v-bind:class="{ 'far fa-long-arrow-right': !reAuthLoading, 'far fa-spinner-third fa-spin': reAuthLoading }"></i>
+						</button>
+					</div>
+				</form> <!-- End modal body/form -->
 
 			</div>
 
@@ -53,14 +61,13 @@
 </template>
 
 <script>
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
 import firebase from "firebase";
+// Mixins
 import scrollLockMixin from "@/components/mixins/ui/scrollLockMixin.js";
 
 export default {
 	name: "ReAuth",
 	mixins: [
-		toastMixin,
 		scrollLockMixin
 	],
 	data() {
@@ -71,11 +78,19 @@ export default {
 		};
 	},
 	mounted() {
-		this.showModal = true;
-		this.scrollLock(true)
+		let _this = this;
+		_this.showModal = true;
+		_this.scrollLock(true)
+		// Focus modal
+		setTimeout(function(){
+			_this.$refs.modal.focus();
+		}, 100)
 	},
 	methods: {
-		// Close auth, emit close
+		///////////////////////
+		//    Close Auth    //
+		/////////////////////
+		// emit authClosed
 		closeAuth: function(){
 			let _this = this;
 			// Hide Modal
@@ -88,6 +103,10 @@ export default {
 				_this.$emit("authClosed");
 			}, 300)
 		},
+		//////////////////////////////////
+		//    Reauthenticate Window    //
+		////////////////////////////////
+
 		reauthenticate: function(){
 			let _this = this;
 
@@ -100,7 +119,6 @@ export default {
 				user.email, 
 				_this.password
 			);
-
 			user.reauthenticateWithCredential(credential).then(function() {
 				// User re-authenticated.
 				_this.reAuthLoading = false;
@@ -119,7 +137,5 @@ export default {
 </script>
 
 <style lang="less">
-
-	@import '~@/styles/variables.less';
-	
+	// @import '~@/styles/variables.less';
 </style>

@@ -1,12 +1,29 @@
+<!-- 
+// 	Toast
+// 	_________________________
+// 
+// 	Toast element to display messages
+// 		Added to App component to be available on anay page/view
+// 		Uses global plugin method to send toast data to home component, which will then relay the data to this component
+// 		Maybe not the best way, but it made sense to me at the time
+// 
+// 		Accepts: 
+// 			visible - visiblity of toast
+// 			icon - Font Awesome full icon class (ex 'far fa-star')
+// 			color - color class - red, green, yellow, or primary (default)
+// 			title - Short bold text on top
+// 			body - the long text for the toast message
+// 
+// 
+-->
+
 <template>
 	<!-- Toast notificaion -->
 	<transition name="toast">
 
-		<div id="toast" v-bind:class="{'hide ': hidingToast} + ' ' + toastData.color" v-if="toastData.visible" @click="hideToast()">
-			<!-- Floaing x - clicking anywhere will close it, though -->
-			<div class="toast-close">
-				<i class="fas fa-times"></i>
-			</div>
+		<!-- <div id="toast" v-bind:class="toastData.color" @click="hideToast()"> -->
+		<div id="toast" class="focusable" v-bind:class="toastData.color" v-if="toastData.visible" @click="hideToast()" tabindex="0" aria-label="Alert" ref="toast">
+			
 			<!-- Contetnt -->
 			<div class="toast-content">
 				<div class="toast-icon">
@@ -21,6 +38,12 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Floaing x - clicking anywhere will close it, though -->
+			<button class="toast-close" @click="hideToast()" aria-label="Close Alert">
+				<i class="far fa-times"></i>
+			</button>
+
 			<!-- 5 second progress bar -->
 			<div class="toast-bar progress"></div>
 		</div>
@@ -45,14 +68,9 @@ export default {
 		};
 	},
 	methods: {
-		//////////////////
-		//    Toast    //
-		////////////////
-		// Call with toast([]) with these props:
-		// "[Title Text]", "[Body Text]", 
-		//"[color (blue is blank/default, red, or green)]", 
-		// "[fontAwesome class (ex: fas fa-check)]")
-		
+		/////////////////////
+		//   Show Toast   //
+		///////////////////
 		showToast: function(title, body, color, icon){
 
 			let _this = this;
@@ -67,14 +85,22 @@ export default {
 				"body": body
 			}
 
+
+			// Focus
+			setTimeout(function(){
+				_this.$refs.toast.focus();
+			}, 100)
+
 			// Hide after 5 seconds
 			setTimeout(function(){
 				_this.hideToast();
-			}, 5000)
+			}, 4000)
 		},
 		
 
-		// Hide toast,
+		/////////////////////
+		//   Hide Toast   //
+		///////////////////
 		hideToast: function(){
 			let _this = this;
 
@@ -98,8 +124,6 @@ export default {
 	///////////////////
 	//    Toast     //
 	/////////////////
-
-
 	#toast{
 		position: fixed;
 		bottom: 25px;
@@ -108,8 +132,9 @@ export default {
 		right: 25px;
 		display: flex;
 		flex-direction: column;
-		background-color: var(--backgroundLayer);
-		border-radius: 6px;
+		background-color: var(--altBackground);
+		backdrop-filter: blur(3px);
+		border-radius: 12px;
 		transition: var(--transition);
 		box-shadow: var(--shadow);
 		z-index: 50000;
@@ -120,9 +145,11 @@ export default {
 			right: unset;
 			width: 100%;
 			border-radius: 0;
-			border-top-right-radius: 12px;
-			border-top-left-radius: 12px;
+			border-top-right-radius: 20px;
+			border-top-left-radius: 20px;
 			bottom: 0;
+			box-shadow: var(--shadowTop);
+			border: none;
 		}
 
 		// Transition down when hiding beore unmount
@@ -136,9 +163,9 @@ export default {
 		// Close icon top right corner
 		.toast-close{
 			position: absolute;
-			font-size: 13px;
-			right: 6px;
-			top: 6px;
+			font-size: 18px;
+			right: 3px;
+			top: 3px;
 			height: 24px;
 			width: 24px;
 			border-radius: 50%;
@@ -152,7 +179,6 @@ export default {
 			opacity: 0.3;
 
 			@media (max-width: @screenSM) {
-				font-size: 18px;
 				width: 30px;
 				height: 30px;
 				right: 6px;
@@ -178,13 +204,13 @@ export default {
 		.toast-content{
 			flex-grow: 3;
 			box-sizing: border-box;
-			padding: 18px 24px 20px 14px;
+			padding: 14px 12px 16px 10px;
 			display: flex;
 			color: var(--text);
 
 			// Increase padding on smaller screens
 			@media (max-width: @screenSM) {
-				padding: 18px 28px 23px 18px;
+				padding: 22px 25px 27px 15px;
 			}
 
 			// Icon left on toast
@@ -196,13 +222,14 @@ export default {
 				width: 56px;
 				min-width: 56px;
 				max-width: 56px;
-				font-size: 38px;
+				font-size: 36px;
 				box-sizing: content-box;
 				padding-bottom: 2px;
-				padding-right: 18px;
 				height: auto;
-				border-right: 1px solid var(--textLight);
 				color: var(--primary);
+				@media (max-width: @screenSM) {
+					font-size: 46px;
+				}
 			}
 
 			// Body of the toastt
@@ -212,7 +239,7 @@ export default {
 				flex-direction: column;
 				justify-content: center;
 				box-sizing: border-box;
-				padding-left: 15px;
+				padding-left: 8px;
 				max-width: 280px;
 				min-width: 160px;
 				color: var(--text);
@@ -221,20 +248,34 @@ export default {
 				@media (max-width: @screenSM) {
 					max-width: none;
 					min-width: 0px;
-					padding-left: 25px;
-					padding-top: 6px;
+					padding-left: 8px;
 				}
 
 				.toast-title{
-					font-size: 15px;
-					padding-bottom: 5px;
+					font-size: 17px;
 					font-weight: 700;
-					letter-spacing: 0.45px;
+					letter-spacing: 0.25px;
+					padding-bottom: 2px;
+
+					// Spacing on mobile
+					@media (max-width: @screenSM) {
+						padding-bottom: 4px;
+						font-size: 16px;
+					}
 				}
 				.toast-body{
-					font-size: 12px;
+					font-size: 14px;
 					line-height: 18px;
-					letter-spacing: 0.45px;
+					letter-spacing: 0.5px;
+					font-weight: 500;
+					color: var(--textLighter);
+					font-family: var(--systemFont);
+
+					// Spacing on mobile
+					@media (max-width: @screenSM) {
+						font-size: 13px;
+						line-height: 16px;
+					}
 				}
 			}
 
@@ -269,7 +310,7 @@ export default {
 
 			// Show progress moving when class is added with v-if
 			&.progress:after{
-				animation: toastBar 5s 1 0s linear;
+				animation: toastBar 4s 1 0s linear;
 			}
 		}
 

@@ -1,35 +1,51 @@
+<!--
+//  Change Email component
+// _________________________
+//
+//  Simple .field element with text input to change email
+// 		Buttons below to save or cancel the change
+// 		Checks email format, then submits to firebase to change
+// 		If user hasn't signed in recently, the ReAuth component is used to prompt user for their password again
+// 
+-->
+
 <template>
 
-	<div class="basic-field">
+	<div class="field">
 		<!-- Label -->
-		<label>Email Address:</label>
+		<label>Email Address</label>
 		<!-- Value -->
 		<div class="field-body">
-			{{$store.getters.userPreferences.email}}
 
-			<!-- Edit email button -->
-			<button class="edit-preference" @click="showChangeEmail()" v-bind:class="{ 'ignore': showEmailEditor}" aria-label="Change Email Address">
-				<i class="far fa-pencil"></i>
-			</button>
+			<div class="field-value">
+				<div class="value">
+					{{$store.getters.userPreferences.email}}
+				</div>
+				<div class="action">
+					<!-- Change Email Button -->
+					<button class="button small grey" @click="showChangeEmail()" aria-label="Change Email Address" v-if="!showEmailEditor">
+						<i class="far fa-pencil"></i>
+						<span>Change</span>
+					</button>
+				</div>
+			</div>
+
 
 			<!-- Transition form to edit email in -->
 			<transition name="basic">
 
-				<form @submit.prevent="changeEmailAddress();" v-if="showEmailEditor" class="edit-setting-form">
-
+				<form @submit.prevent="changeEmailAddress();" v-if="showEmailEditor" class="card">
 					<!-- New email input -->
-					<div class="basic-field">
+					<div class="field">
 						<label for="newEmailAddress">New email address</label>
 						<div class="field-body">
 							<input type="email" v-model="newEmailAddress" id="newEmailAddress" required>
 						</div>
 					</div>
-
-
 					<!-- Cancel and save buttons -->
-					<div class="account-field-buttons">
+					<div class="card-buttons">
 						<!-- Cancel button -->
-						<button class="button transparent" type="button" aria-label="Cancel Change Email" @click="closeChangeEmail()">
+						<button class="button grey" type="button" aria-label="Cancel Change Email" @click="closeChangeEmail()">
 							<span>Cancel</span>
 							<i class="far fa-times"></i>
 						</button>
@@ -54,15 +70,15 @@
 </template>
 
 <script>
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
 import firebase from "firebase";
+// Components 
 import ReAuth from "@/components/settings/ReAuth";
+// Mixins
 import preferencesMixin from "@/components/mixins/preferencesMixin.js";
 
 export default {
 	name: "ChangeEmail",
 	mixins: [
-		toastMixin,
 		preferencesMixin,
 	],
 	components: {
@@ -77,7 +93,9 @@ export default {
 		};
 	},
 	methods: {
-		// Change email address
+		//////////////////////////
+		//    Change email     //
+		////////////////////////
 		changeEmailAddress: function(){
 
 			let _this = this;
@@ -92,7 +110,7 @@ export default {
 				_this.toast("Success!", "Your email address has been changed.", "green", "far fa-asterisk");
 				// Set and save in store
 				_this.$store.getters.userPreferences.email = _this.newEmailAddress;
-				_this.savePrefs();
+				_this.savePreferences();
 				// Close & reset modal
 				_this.closeChangeEmail();
 			}).catch(function(error) {

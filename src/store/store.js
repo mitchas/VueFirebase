@@ -1,3 +1,8 @@
+// 
+// Store
+// 		Store and get values across components 
+// 
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -5,42 +10,61 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 
-	// Defs:
-	// isSignedIn: Whether user exists based on Firebase
-	// loginRedirectURL: when user tries to access auth-locked page, this holds URL to redirect after login
-	// user: user.data from firebase (uid, etc)
-	// userPreferences: settings users (or anon) can toggle. Synced with firebase if logged in
 	state: {
-		scrollLock: false,
-		isSignedIn: false,
+		isSignedIn: null,
 		loginRedirectURL: "",
 		user: null,
-		// UI
-		// If soft keyboard visible on mobile
-		softKeyboard: false,
 		// Project stats
 		projectStats: {
 			user_count: null
 		},
-		// UserPreferences
-		// Update 3 places in App.vue
-		// at var defaultPrefs
-		userPreferences: {
-			username: "",
-			user_created: null,
-			admin_level: 0,
-			user_number: null,
-			darkMode: false,
-			email: null,
-			firebase_uid: null,
-			animations: true,
+		// Holds data for later
+		hold: {
+			forecast: null,
+			tooltipIcon: "far fa-feather",
+			appVersion: "1.0.0",
 		},
-		profilePhoto: "",
+		// UserPreferences
+		userPreferences: {
+			has_business: false,
+			username: "",
+			firebase_uid: null,
+			admin_level: 0,
+			location: null,
+			email: null,
+			ui: {
+				confirmLeave: true,
+				dark_mode: false,
+				animations: true,
+				tooltips: true,
+			},
+			meta: {
+				pwa_installed: false,
+				user_number: null,
+				user_created: null,
+				new_user: false,
+			},
+			endpoints: {}
+		},
+		// UI
+		// If screen size is mobile - watched by resize
+		// isMac = navigator.appVersion.includes('Macintosh')
+		device: {
+			hasTouch: false,
+			isMac: navigator.appVersion.includes('Macintosh'),
+			softKeyboardVisible: false,
+			standalone: false,
+			orientationSensor: false,
+			// mobile - less than 768px
+			mobile: true,
+			// If soft keyboard visible on mobile
+			softKeyboard: false,
+		},
+
+		// Development Mode
+		hostName: window.location.hostname,
 	},
 	mutations: {
-		scrollLock(state, scrollLock) {
-			state.scrollLock = scrollLock
-		},
 		isSignedIn(state, isSignedIn) {
 			state.isSignedIn = isSignedIn
 		},
@@ -56,21 +80,34 @@ export const store = new Vuex.Store({
 		projectStats(state, projectStats) {
 			state.projectStats = projectStats
 		},
+		hold(state, hold) {
+			state.hold = hold
+		},
 		userPreferences(state, userPreferences) {
 			state.userPreferences = userPreferences
 		},
-		profilePhoto(state, profilePhoto) {
-			state.profilePhoto = profilePhoto
+		device(state, device) {
+			state.device = device
+		},
+		meta(state, meta) {
+			state.meta = meta
+		},
+
+		hostName(state, hostName) {
+			state.hostName = hostName
 		},
 	},
 	getters: {
-		scrollLock: state => state.scrollLock,
 		isSignedIn: state => state.isSignedIn,
 		loginRedirectURL: state => state.loginRedirectURL,
 		user: state => state.user,
 		softKeyboard: state => state.softKeyboard,
 		projectStats: state => state.projectStats,
+		hold: state => state.hold,
 		userPreferences: state => state.userPreferences,
-		profilePhoto: state => state.profilePhoto,
+		device: state => state.device,
+		meta: state => state.meta,
+
+		hostName: state => state.hostName,
 	}
 })

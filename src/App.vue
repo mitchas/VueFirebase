@@ -1,4 +1,11 @@
-// App Base 
+<!--
+// 
+// App.vue
+// _________________________
+//	Main app component, present on all views
+// 
+// -->
+
 <template>
 	<!-- <div id="app"> -->
 	<div id="app">
@@ -12,22 +19,24 @@
 
 				<!-- All page contetnt contained within main -->
 				<main id="content">
-
-					<!-- Sidebar Component -->
-					<Sidebar></Sidebar>
+					<!-- NavBar Component -->
+					<NavBar></NavBar>
 				
 					<!-- Center/Main Content -->
 					<div class="body-content">
 						<!-- page transition defined in base.less -->
 						<transition name="page" mode="out-in">
-							<router-view/>
+							<router-view v-if="$store.getters.isSignedIn != null"/>
 						</transition>
 					</div>
-					
 				</main>
 
 				<!-- Toast Component -->
 				<Toast ref="toastComponent"></Toast>
+				<!-- Alert Component -->
+				<Alert ref="alertComponent"></Alert>
+				<!-- Confirm Leave Component -->
+				<!-- <ConfirmLeave ref="confirmLeaveComponent"></ConfirmLeave> -->
 
 			</div>
 		</transition>
@@ -35,36 +44,33 @@
 </template>
 
 
-// Script
-// Script
-// Script
 <script>
-import firebase from "firebase";
 import { db } from "@/store/firebase";
 // Components
+import Alert from "@/components/ui/Alert";
 import Toast from "@/components/ui/Toast";
-import TopBar from "@/components/ui/TopBar";
-import Sidebar from "@/components/ui/Sidebar";
+// import ConfirmLeave from "@/components/ui/ConfirmLeave";
+import TopBar from "@/components/ui/TopBar/TopBar";
+import NavBar from "@/components/ui/NavBar";
 // Mixins
-import navigateMixin from "@/components/mixins/navigateMixin.js";
 import userStateMixin from "@/components/mixins/auth/userStateMixin.js";
-
-
+import screenResizeMixin from "@/components/mixins/ui/screenResizeMixin.js";
 
 export default {
 	name: "app",
 	mixins: [
-		navigateMixin,
-		userStateMixin
+		userStateMixin,
+		screenResizeMixin,
 	],
 	components: {
+		Alert,
 		Toast,
 		TopBar,
-		Sidebar
+		NavBar,
+		// ConfirmLeave,
 	},
 	data() {
 		return {
-			signoutDarkMode: null,
 			scrollLockPos: 0,
 			pageMounted: false,
 		};
@@ -83,21 +89,11 @@ export default {
 	},
 	methods: {
 
-		//////////////////
-		//    Toast    //
-		////////////////
-		// This forwards the toast content to the component, which displays it
-		relayToast: function(title, body, color, icon) {
-			this.$refs.toastComponent.showToast(title, body, color, icon);
-		},
-
 		////////////////////
 		// Project Stats //
 		//////////////////
 		getProjectStats: function(){
 			let _this = this;
-			console.log("Getting project stats")
-
 			// Get project stats from firestore, save to vue store
 			var statRef = db.collection("site").doc('stats');
 			statRef.get().then(function(doc) {
@@ -108,12 +104,7 @@ export default {
 					console.log("Can't get project stats")
 				}
 			}).catch(function(error) {console.log("Error getting project stats:", error);});
-
-
-
 		}
-
-
 
 	}
 };
@@ -141,6 +132,7 @@ export default {
 	}
 
 
+
 	//////////////////////////////
 	//    Main Content         //
 	////////////////////////////
@@ -163,7 +155,7 @@ export default {
 			min-height: 90vh;
 			// to account for header
 			min-height: calc(~'100% - 100px');
-			
+			overflow-x: hidden;
 
 			@media (min-width: @screenMD) {
 				padding-left: 50px;

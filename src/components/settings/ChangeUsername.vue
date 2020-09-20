@@ -1,15 +1,17 @@
-	<!--
-	// This component is not being used anywhere
-
-	// You should probably write something to delete the record of the user's previous username.
-	// Otherwise usernames will appear taken when they aren't
-	// And users could switch usernames as many times as they want to block usernames, etc.
-	-->
-
+<!--
+//  Change Username component
+// 	NOT CURRENTLY UED
+// 	SO MAYBE IT DOESNT WORK ANYMORE?
+// _________________________
+//
+//  Simple .field element with inputs to change username
+// 		Checks username against taken usernames, shows error
+// 
+-->
 
 
 <template>
-	<div class="basic-field">
+	<div class="field">
 		<!-- Label -->
 		<div>Username:</div>
 		<!-- Value -->
@@ -17,9 +19,12 @@
 			{{$store.getters.userPreferences.username}}
 
 			<!-- Edit username button -->
-			<button class="edit-preference" @click="showChangeUsername()" v-bind:class="{ 'ignore': showUsernameEditor}" aria-label="Change Username">
-				<i class="far fa-pencil"></i>
-			</button>
+			<transition name="basic">
+				<button class="button grey small mleft-xs" @click="showChangeUsername()" v-if="!showUsernameEditor" aria-label="Change Username">
+					<i class="far fa-pencil"></i>
+					<span>Change</span>
+				</button>
+			</transition>
 
 
 			<transition name="basic">
@@ -27,7 +32,7 @@
 				<form @submit.prevent="validateUsername();" v-if="showUsernameEditor" class="edit-setting-form">
 
 					<!-- New username input -->
-					<div class="basic-field">
+					<div class="field">
 						<label>New username</label>
 						<div class="field-body">
 							<input type="text" v-model="newUsername" id="newUsername" required>
@@ -37,7 +42,7 @@
 					<!-- Cancel & Save button -->
 					<div class="account-field-buttons">
 						<!-- Cancel button -->
-						<button class="button transparent" type="button" aria-label="Cancel Change Username" @click="closeChangeUsername()">
+						<button class="button grey" type="button" aria-label="Cancel Change Username" @click="closeChangeUsername()">
 							<span>Cancel</span>
 							<i class="far fa-times"></i>
 						</button>
@@ -51,9 +56,9 @@
 
 					<!-- Errors for usernames -->
 					<div class="username-warnings" v-if="newUsernameInvalidLength || newUsernameInvalidCharacters || newUsernameTaken">
-						<!-- Too long or short - max 20, min 3 -->
+						<!-- Too long or short - max 30, min 3 -->
 						<div class="warning" v-if="newUsernameInvalidLength">
-							It has to be at least 3 characters, max 20.
+							It has to be at least 3 characters, max 30.
 						</div>
 						<!-- Taken -->
 						<div class="warning" v-if="newUsernameTaken">
@@ -78,15 +83,14 @@
 </template>
 
 <script>
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
-import preferencesMixin from "@/components/mixins/preferencesMixin.js";
 import firebase from "firebase";
 import { db } from "@/store/firebase";
+// Mixins
+import preferencesMixin from "@/components/mixins/preferencesMixin.js";
 
 export default {
 	name: "ChangeUsername",
 	mixins: [
-		toastMixin,
 		preferencesMixin,
 	],
 	components: {
@@ -110,7 +114,7 @@ export default {
 
 
 			// If username exists and is at least 3 chars
-			if(this.newUsername.length && this.newUsername.length >= 3 && this.newUsername.length <= 20){
+			if(this.newUsername.length && this.newUsername.length >= 3 && this.newUsername.length <= 30){
 				let _this = this;
 				// Valid length
 				_this.newUsernameInvalidLength = false;
@@ -122,7 +126,7 @@ export default {
 
 
 					// Check username against existing username
-					var docRef = db.collection("usernames").doc(_this.newUsername);
+					var docRef = db.collection("businessurls").doc(_this.newUsername);
 					docRef.get().then(function(doc) {
 						if (doc.exists) {
 							// User exists
@@ -156,7 +160,7 @@ export default {
 			var usernameChange = {
 				uid: uid
 			};
-			db.collection("usernames").doc(_this.newUsername).set(usernameChange, { merge: true }).then(() => {
+			db.collection("businessurls").doc(_this.newUsername).set(usernameChange, { merge: true }).then(() => {
 				console.log('Successfully updated username')
 				_this.toast("Success!", "You are now the user formerly known as " + _this.$store.getters.userPreferences.username, "", "far fa-guitar-electric");
 
@@ -171,10 +175,6 @@ export default {
 				console.error('There was an error editing username: ' + error)
 			})
 
-
-
-
-			
 		},
 		// Close modal to change email
 		showChangeUsername: function(){

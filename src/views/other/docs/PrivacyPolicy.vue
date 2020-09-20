@@ -1,14 +1,24 @@
+<!--
+//  Privacy Policy
+// _________________________
+//  Privacy Policy document
+// 
+-->
+
 <template>
 	<div class="page">
 
-		<!-- Privacy Policy -->
-		<!-- Privacy Policy -->
-		<!-- Privacy Policy -->
+		<!-- Header -->
 		<h1>Privacy Policy</h1>
-		<span class="doc-v">v.1.0 - February 10, 2020</span>
+		<div class="badge yellow mtop-xs">
+			<i class="far fa-sync-alt"></i>
+			<span>v.1.0 - MONTH DAY, 2020</span>
+		</div>		
 		<p>
-			ABCDEFG's Privacy Policy was last updated and went into effect <b>January 31, 2020</b>.
+			ABCDEFG's Privacy Policy was last updated and went into effect <b>MONTH DAY, 2020</b>.
 		</p>
+
+		<!-- Start of policy -->
 		<h3 class="mtop-md">
 			Your privacy is important. At ABCDEFG, there are a few fundamental principles:
 		</h3>
@@ -221,7 +231,6 @@
 </template>
 
 <script>
-import metaMixin from "@/components/mixins/metaMixin.js";
 
 export default {
   	name: "PrivacyPolicy",
@@ -229,10 +238,8 @@ export default {
 
 	},
 	mixins: [
-		metaMixin
 	],
 	created: function () {
-		this.updateMeta("Privacy Policy", "Read our Privacy Policy")
 	},
 	methods: {
 		
@@ -241,18 +248,5 @@ export default {
 </script>
 
 <style lang="less">
-	@import '~@/styles/variables.less';
-
-	.doc-v{
-		background-color: var(--secondary);
-		box-sizing: border-box;
-		font-size: 12px;
-		margin: 10px 0;
-		display: inline-block;
-		padding: 5px 6px 4px 6px;
-		border-radius: var(--borderRadiusSmall);
-		color: var(--textInvert);
-		font-family: var(--sans);
-		font-weight: 600;
-	}
+	// @import '~@/styles/variables.less';
 </style>

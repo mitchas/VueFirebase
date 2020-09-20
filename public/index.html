@@ -9,11 +9,12 @@
 		<meta name="keywords" content="" />
 		<meta name="theme-color" content="#02080A">
 		<!-- Icons -->
-        <link rel="shortcut icon" href="<%= VUE_APP_BASE_URL %>/img/icons/favicon-32x32.png">
+        <link rel="shortcut icon" href="/img/icons/favicon-32x32.png">
 
 
 		<!-- CDN Imports -->
-		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz" crossorigin="anonymous">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-IIED/eyOkM6ihtOiQsX2zizxFBphgnv1zbe1bKA+njdFzkr6cDNy16jfIKWu4FNH" crossorigin="anonymous">
 
 		<!-- Social Media Meta -->
 		<!-- Facebook -->
@@ -69,6 +70,26 @@
 			}
 		</style>
 
+
+		<!-- Tracking -->
+		<script>
+			var _paq = window._paq || [];
+			
+			/* matomo methods like "setCustomDimension" should be called before "trackPageView" */
+			_paq.push(['enableLinkTracking']);
+			_paq.push(['disableCookies']);
+
+			(function() {
+				var u="//mitchs.co/hello/";
+				_paq.push(['setTrackerUrl', u+'piwik.php']);
+				_paq.push(['setSiteId', '3']);
+				var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+				g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+			})();
+			_paq.push(['trackPageView']);
+
+		</script>
+
     </head>
     <body>
 
@@ -84,6 +105,7 @@
 
         
         <div id="app"></div>
-        <!-- built files will be auto injected -->
+		<!-- built files will be auto injected -->
+
   </body>
 </html>

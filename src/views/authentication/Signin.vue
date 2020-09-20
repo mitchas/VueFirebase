@@ -1,52 +1,44 @@
+<!--
+//  Sign In view
+// _________________________
+//
+//  Loads authentican component with email and password field for signing in
+// 
+// 		signinUser()
+// 			- Takes username and password and signs in with Firebase, toast if error
+//
+// 		signinSuccess()
+// 			- Called after signinUser success - saves isSignedIn to store, redirects home or to previous URL
+// 		
+-->
+
 <template>
-	<div class="auth-page ptop-sm">
-		<!-- ========================
-			========================
-			Sign in form 
-			========================
-			========================-->
-		<div class="auth-page-header">
-			<h1>Welcome back</h1>
+
+	<AuthenticationPage
+		header="Welcome Back"
+		v-bind:disabled="email.length < 5 || !password.length" 
+		v-bind:formBottom="['Need an account?', '/register/', 'Sign Up']"
+		submitText="Sign In"
+		v-bind:formLoading="accountLoading"
+		@formSubmitted="signinUser()">
+
+		<!-- Email Address -->
+		<div class="auth-field">
+			<label for="signinEmail">Email address</label>
+			<input type="email" v-model="email" id="signinEmail" placeholder=" " required>
 		</div>
-		<form class="auth-form-body" @submit.prevent="signinUser(); accountLoading = true">
-			<!-- Email Address -->
-			<div class="basic-field">
-				<label for="signinEmail">Email address</label>
-				<div class="field-body">
-					<input type="email" v-model="email" id="signinEmail" placeholder=" " required>
-				</div>
-			</div>
 
-			<!-- Password -->
-			<div class="basic-field">
-				<label for="signinPassword">
-					Password
-					<router-link id="forgotPassword" to="/passwordreset" tabindex="-1">Forgot it?</router-link>
-				</label>
-				<div class="field-body">
-					<input type="password" v-model="password" id="signinPassword" required>
-				</div>
-			</div>
+		<!-- Password -->
+		<div class="auth-field">
+			<label for="signinPassword">
+				Password
+				<router-link class="help-link" to="/passwordreset" tabindex="-1">Forgot it?</router-link>
+			</label>
+			<input type="password" v-model="password" id="signinPassword" required>
+		</div>
 
-			<!-- Sign in button -->
-			<button class="button auth-button" type="submit" :disabled="email.length < 5 || !password.length || accountLoading" aria-label="Sign In">
-				<span v-if="accountLoading">Loading</span>
-				<span v-else>Sign In</span>
-				<i v-bind:class="{ 'fad fa-chevron-circle-right': !accountLoading, 'far fa-spinner-third fa-spin': accountLoading }"></i>
-			</button>
+	</AuthenticationPage>
 
-			<!-- Create account -->
-			<div class="auth-bottom">
-				<p>
-					Need an account?
-					<router-link to="/register">Sign Up</router-link>
-				</p>
-			</div>
-		</form>
-
-	</div>
-
-	
 
 </template>
 
@@ -54,18 +46,16 @@
 <script>
 import firebase from "firebase";
 import { db } from "@/store/firebase";
-import toastMixin from "@/components/mixins/ui/toastMixin.js";
-import metaMixin from "@/components/mixins/metaMixin.js";
-
+// Components
+import AuthenticationPage from "@/components/user/AuthenticationPage";
+// Mixins
 
 export default {
 	name: "signinRegister",
 	mixins: [
-		toastMixin,
-		metaMixin
 	],
 	components: {
-		// FormMessage
+		AuthenticationPage
 	},
 	data() {
 		return {
@@ -77,17 +67,17 @@ export default {
 		};
 	},
 	created: function () {
-		this.updateMeta("Sign In", "This is the sign in page description.")
 	},
 	watch: {
 	},
 	methods: {
 
-		// Sign in existing user
-		// Sign in existing user
-		// Sign in existing user
+		///////////////////////
+		//// Sign In User ////
+		/////////////////////
 		signinUser: function() {
 			let _this = this;
+			_this.accountLoading = true;
 
 			firebase
 			.auth()
@@ -107,9 +97,15 @@ export default {
 			);
 		},
 
+		/////////////////////////////
+		//// Sign In Successful ////
+		///////////////////////////
 		signinSuccess: function(){
 			// Commit signed in ttoo store
 			this.$store.commit('isSignedIn', true);
+			console.log("N?ULL FORE")
+			this.$store.getters.hold.forecast = null;
+			console.log(this.$store.getters.hold.forecast)
 			// Get stored value from redirect
 			var redirectAfterLogin = this.$store.getters.loginRedirectURL;
 
@@ -133,29 +129,7 @@ export default {
 
 <style lang="less">
 
-	@import '~@/styles/variables.less';
-
-	// Forgot Password button
-	// Floats right of label
-	#forgotPassword{
-		float: right;
-		padding: 0;
-		margin: 0;
-		border: none;
-		font-size: 11px;
-		font-weight: 600;
-		color: var(--text);
-		opacity: 0.35;
-		top: 1px;
-		letter-spacing: 0.25px;
-		position: relative;
-		transition: var(--transition);
-
-		&:hover{
-			opacity: 1;
-			transition: var(--transition);
-		}
-	}
+	// @import '~@/styles/variables.less';
 		
 </style>
 

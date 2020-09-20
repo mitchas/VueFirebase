@@ -7,7 +7,7 @@ This is a template for a Vue-Firebase app. It includes all the basics for a user
     * Forgot and Reset password.
     * Create username, check against taken usernames.
  * Terms of Service & Privacy policy.
- * Toast notifications.
+ * Toast notifications, and smaller alerts
  * Super responsive, smooth animations, feels native on mobile.
  * Auto dark-mode based on device settings, with preference that saves to account.
  * Profile pages with basics set up (name, photo, bio)
